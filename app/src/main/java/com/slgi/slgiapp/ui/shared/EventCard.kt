@@ -28,7 +28,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
@@ -83,10 +82,10 @@ fun EventCard(
             // General information about the event
             Divider()
             Row(
-                horizontalArrangement = Arrangement.Center,
+                horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(5.dp)
+                    .padding(0.dp, 5.dp)
             ) {
                 EventInformation(
                     icon = Icons.Outlined.InsertInvitation,
@@ -110,7 +109,9 @@ fun EventCard(
             Spacer(modifier = Modifier.height(5.dp))
 
             // Fireleader information and button for participation
-            Row(verticalAlignment = Alignment.CenterVertically) {
+            Row(verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
                 Column(modifier = Modifier.weight(1f)) {
                     EventInformation(Icons.Outlined.Person, null, eventFireleader)
                 }
