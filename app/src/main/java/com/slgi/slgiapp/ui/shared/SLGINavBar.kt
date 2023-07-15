@@ -9,11 +9,13 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.slgi.slgiapp.ui.theme.SLGIAppTheme
+import com.slgi.slgiapp.R
 
 @Composable
-fun NavigationBarUser(onNavigateToMyEvents: () -> Unit,
+fun SLGINavBar(onNavigateToMyEvents: () -> Unit,
                       onNavigateToUpcomingEvents: () -> Unit,
                       onNavigateToProfile: () -> Unit,
                       onNavigateToUserRequests: () -> Unit,
@@ -30,7 +32,7 @@ fun NavigationBarUser(onNavigateToMyEvents: () -> Unit,
                     contentDescription = null
                 )},
             label = {
-                    Text(text = "Mine")
+                    Text(text = stringResource(id = R.string.nav_label_my_events))
             },
             onClick = onNavigateToMyEvents)
         NavigationBarItem(
@@ -41,7 +43,7 @@ fun NavigationBarUser(onNavigateToMyEvents: () -> Unit,
                     contentDescription = null
                 )},
             label = {
-                Text(text = "Kommende")
+                Text(text = stringResource(id = R.string.nav_label_upcoming_events))
             },
             onClick = onNavigateToUpcomingEvents)
         if (admin){
@@ -53,7 +55,7 @@ fun NavigationBarUser(onNavigateToMyEvents: () -> Unit,
                         contentDescription = null
                     )},
                 label = {
-                    Text(text = "Anmodninger")
+                    Text(text = stringResource(id = R.string.nav_label_requests))
                 },
                 onClick = onNavigateToUserRequests)
         }
@@ -65,7 +67,7 @@ fun NavigationBarUser(onNavigateToMyEvents: () -> Unit,
                     contentDescription = null
                 )},
             label = {
-                Text(text = "Profil")
+                Text(text = stringResource(id = R.string.nav_label_profile))
             },
             onClick = onNavigateToProfile)
     }
@@ -78,7 +80,7 @@ fun NavigationBarUser(onNavigateToMyEvents: () -> Unit,
 fun NavigationBarPreview(){
     SLGIAppTheme(dynamicColor = false){
         Surface() {
-            NavigationBarUser({},{},{},{},true)
+            SLGINavBar({},{},{},{},true)
         }
     }
 }
