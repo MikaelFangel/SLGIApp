@@ -29,7 +29,8 @@ fun UpcomingEventsScreen(viewModel: UpcomingEventsScreenViewModel) {
                 onNavigateToUpcomingEvents = { /*TODO*/ },
                 onNavigateToProfile = { /*TODO*/ },
                 onNavigateToUserRequests = { /*TODO*/ },
-                admin = false
+                admin = false,
+                page = 1
             )
         }
     ) { innerPadding ->
