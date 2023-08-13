@@ -16,16 +16,19 @@ import com.slgi.slgiapp.R
 
 @Composable
 fun SLGINavBar(onNavigateToMyEvents: () -> Unit,
-                      onNavigateToUpcomingEvents: () -> Unit,
-                      onNavigateToProfile: () -> Unit,
-                      onNavigateToUserRequests: () -> Unit,
-                      admin: Boolean
+               onNavigateToUpcomingEvents: () -> Unit,
+               onNavigateToProfile: () -> Unit,
+               onNavigateToUserRequests: () -> Unit,
+               page: Int,
+               admin: Boolean
 ){
+    val pageSelected = arrayOf(false, false, false, false)
+    pageSelected[page] = true
     NavigationBar(containerColor = MaterialTheme.colorScheme.surface,
         contentColor = MaterialTheme.colorScheme.onPrimaryContainer
     ){
         NavigationBarItem(
-            selected = false,
+            selected = pageSelected[0],
             icon = {
                 Icon(
                     Icons.Outlined.EventAvailable,
@@ -36,7 +39,7 @@ fun SLGINavBar(onNavigateToMyEvents: () -> Unit,
             },
             onClick = onNavigateToMyEvents)
         NavigationBarItem(
-            selected = false,
+            selected = pageSelected[1],
             icon = {
                 Icon(
                     Icons.Outlined.CalendarViewDay,
@@ -48,7 +51,7 @@ fun SLGINavBar(onNavigateToMyEvents: () -> Unit,
             onClick = onNavigateToUpcomingEvents)
         if (admin){
             NavigationBarItem(
-                selected = false,
+                selected = pageSelected[2],
                 icon = {
                     Icon(
                         Icons.Outlined.PersonAdd,
@@ -60,7 +63,7 @@ fun SLGINavBar(onNavigateToMyEvents: () -> Unit,
                 onClick = onNavigateToUserRequests)
         }
         NavigationBarItem(
-            selected = false,
+            selected = pageSelected[3],
             icon = {
                 Icon(
                     Icons.Outlined.Person,
@@ -80,7 +83,7 @@ fun SLGINavBar(onNavigateToMyEvents: () -> Unit,
 fun NavigationBarPreview(){
     SLGIAppTheme(dynamicColor = false){
         Surface() {
-            SLGINavBar({},{},{},{},true)
+            SLGINavBar({},{},{},{},3,true)
         }
     }
 }
