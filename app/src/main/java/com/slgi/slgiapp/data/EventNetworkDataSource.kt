@@ -14,6 +14,10 @@ class EventNetworkDataSource: EventDateSourceApi {
             .whereGreaterThanOrEqualTo(DATE_FIELD, Timestamp.now())
             .dataObjects()
 
+    override suspend fun toggleParticipation(id: String) {
+        TODO("Not yet implemented")
+    }
+
     companion object {
         private const val EVENT_COLLECTION = "Events"
         private const val DATE_FIELD = "dateAndTime"

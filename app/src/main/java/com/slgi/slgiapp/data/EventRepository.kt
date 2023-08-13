@@ -7,4 +7,6 @@ class EventRepository(
 ) {
     val events: Flow<List<Event>>
         get() = eventNetworkDataSource.events
+
+    suspend fun toggleParticipation(id: String) = eventNetworkDataSource.toggleParticipation(id)
 }

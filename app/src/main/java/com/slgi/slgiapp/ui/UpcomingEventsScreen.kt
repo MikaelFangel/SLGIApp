@@ -41,7 +41,7 @@ fun UpcomingEventsScreen(viewModel: UpcomingEventsScreenViewModel) {
                     eventFireleader = it.fireleader,
                     buttonText = "Participate"
                 ) {
-
+                    viewModel.toggleParticipation(it.id)
                 }
             }
         }
