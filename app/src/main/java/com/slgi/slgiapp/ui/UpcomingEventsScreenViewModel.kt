@@ -8,4 +8,5 @@ class UpcomingEventsScreenViewModel(
     val events = eventRepository.events
 
     suspend fun toggleParticipation(id: String) = eventRepository.toggleParticipation(id)
+    suspend fun isParticipating(id: String) = eventRepository.isParticipating(id)
 }
