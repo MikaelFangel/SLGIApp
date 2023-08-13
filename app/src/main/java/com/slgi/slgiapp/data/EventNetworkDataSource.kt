@@ -17,7 +17,7 @@ class EventNetworkDataSource : EventDateSourceApi {
             .dataObjects()
 
     override suspend fun toggleParticipation(id: String) {
-        val userId = Firebase.auth.uid?: return false
+        val userId = Firebase.auth.uid?: return
 
         val participationCollection = Firebase.firestore
             .collection(EVENT_COLLECTION)
