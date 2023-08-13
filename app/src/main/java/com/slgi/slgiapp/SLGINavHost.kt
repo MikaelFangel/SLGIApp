@@ -5,6 +5,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.slgi.slgiapp.data.EventNetworkDataSource
+import com.slgi.slgiapp.data.EventRepository
+import com.slgi.slgiapp.ui.UpcomingEventsScreenViewModel
 import com.slgi.slgiapp.ui.upcomingeventsscreen.UpcomingEventsScreen
 
 enum class Screens {
@@ -20,7 +23,13 @@ fun SLGINavHost(
         startDestination = Screens.UPCOMING_SCREEN.name
     ) {
         composable(Screens.UPCOMING_SCREEN.name) {
-            UpcomingEventsScreen()
+            UpcomingEventsScreen(
+                UpcomingEventsScreenViewModel(
+                    EventRepository(
+                        EventNetworkDataSource()
+                    )
+                )
+            )
         }
     }
 }

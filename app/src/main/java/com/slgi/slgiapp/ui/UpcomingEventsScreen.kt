@@ -1,15 +1,27 @@
 package com.slgi.slgiapp.ui.upcomingeventsscreen
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import com.slgi.slgiapp.data.EventNetworkDataSource
+import com.slgi.slgiapp.data.EventRepository
+import com.slgi.slgiapp.ui.UpcomingEventsScreenViewModel
 import com.slgi.slgiapp.ui.shared.SLGINavBar
+import kotlinx.coroutines.flow.toList
 
 @Composable
-fun UpcomingEventsScreen() {
+fun UpcomingEventsScreen(viewModel: UpcomingEventsScreenViewModel) {
+    val events = viewModel.events.collectAsState(initial = emptyList())
+
     Scaffold(
         bottomBar = {
             SLGINavBar(
@@ -21,8 +33,10 @@ fun UpcomingEventsScreen() {
             )
         }
     ) { innerPadding ->
-        Box(modifier = Modifier.padding(innerPadding)) {
-            Text(text = "Hello World")
+        LazyColumn(Modifier.padding(innerPadding)) {
+            items(items = events.value, key = { it.id }) {
+                Text(it.name)
+            }
         }
     }
 }
