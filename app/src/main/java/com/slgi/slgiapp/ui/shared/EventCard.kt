@@ -165,7 +165,7 @@ fun EventInformation(icon: ImageVector, contentDescription: String?, information
 @Composable
 fun ParticipationButton(buttonText: String, onClickAction: () -> Unit) {
     Button(
-        onClick = { onClickAction },
+        onClick = onClickAction,
         colors = ButtonDefaults.buttonColors(
             MaterialTheme.colorScheme.primaryContainer
         )

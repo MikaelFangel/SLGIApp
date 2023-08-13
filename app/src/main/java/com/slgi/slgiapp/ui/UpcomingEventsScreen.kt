@@ -11,6 +11,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import com.slgi.slgiapp.ui.shared.EventCard
 import com.slgi.slgiapp.ui.shared.SLGINavBar
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.Locale
 
 @Composable
@@ -41,7 +44,9 @@ fun UpcomingEventsScreen(viewModel: UpcomingEventsScreenViewModel) {
                     eventFireleader = it.fireleader,
                     buttonText = "Participate"
                 ) {
-                    viewModel.toggleParticipation(it.id)
+                    CoroutineScope(Dispatchers.IO).launch {
+                        viewModel.toggleParticipation(it.id)
+                    }
                 }
             }
         }
