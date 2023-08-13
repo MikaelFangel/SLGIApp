@@ -1,7 +1,5 @@
-package com.slgi.slgiapp.ui.upcomingeventsscreen
+package com.slgi.slgiapp.ui
 
-import android.util.Log
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -10,14 +8,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
-import com.slgi.slgiapp.data.EventNetworkDataSource
-import com.slgi.slgiapp.data.EventRepository
-import com.slgi.slgiapp.ui.UpcomingEventsScreenViewModel
 import com.slgi.slgiapp.ui.shared.EventCard
 import com.slgi.slgiapp.ui.shared.SLGINavBar
-import kotlinx.coroutines.flow.toList
 
 @Composable
 fun UpcomingEventsScreen(viewModel: UpcomingEventsScreenViewModel) {
@@ -44,7 +36,7 @@ fun UpcomingEventsScreen(viewModel: UpcomingEventsScreenViewModel) {
                     eventDate = it.date,
                     eventTime = it.time,
                     eventNumberOfParticipants = it.participants.toString(),
-                    eventFireleader = it.fireLeader,
+                    eventFireleader = it.fireleader,
                     buttonText = "Participate"
                 ) {
 

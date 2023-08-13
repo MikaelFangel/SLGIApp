@@ -8,7 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import com.slgi.slgiapp.data.EventNetworkDataSource
 import com.slgi.slgiapp.data.EventRepository
 import com.slgi.slgiapp.ui.UpcomingEventsScreenViewModel
-import com.slgi.slgiapp.ui.upcomingeventsscreen.UpcomingEventsScreen
+import com.slgi.slgiapp.ui.UpcomingEventsScreen
 
 enum class Screens {
     UPCOMING_SCREEN,

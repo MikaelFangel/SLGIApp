@@ -7,9 +7,9 @@ data class Event(
     val name: String = "",
     val description: String = "",
     val imageUrl: String = "",
-    val participants: Int = 0,
+    val participants: Long = 0,
     val userParticipation: Boolean = false,
     val date: String = "",
     val time: String = "",
-    val fireLeader: String ="",
+    val fireleader: String = "",
 )
