@@ -6,8 +6,8 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.flow.Flow
 
-class EventNetworkDataSource {
-    val events: Flow<List<Event>>
+class EventNetworkDataSource: EventDateSourceApi {
+    override val events: Flow<List<Event>>
         get() = Firebase.firestore
             .collection(EVENT_COLLECTION)
             .orderBy(DATE_FIELD)
