@@ -39,7 +39,7 @@ import com.slgi.slgiapp.ui.theme.SLGIAppTheme
 
 @Composable
 fun EventCard(
-    eventImage: ImageBitmap,
+    eventImage: ImageBitmap?,
     eventName: String,
     eventDescription: String,
     eventDate: String,
@@ -57,12 +57,14 @@ fun EventCard(
         Box(modifier = Modifier
             .fillMaxWidth()
             .height(140.dp)) {
-            Image(
-                eventImage,
-                modifier = Modifier.clip(shape = CardDefaults.elevatedShape),
-                contentScale = ContentScale.Crop,
-                contentDescription = null
-            )
+            if (eventImage != null) {
+                Image(
+                    eventImage,
+                    modifier = Modifier.clip(shape = CardDefaults.elevatedShape),
+                    contentScale = ContentScale.Crop,
+                    contentDescription = null
+                )
+            }
         }
 
         Column(modifier = Modifier.padding(30.dp, 5.dp)) {

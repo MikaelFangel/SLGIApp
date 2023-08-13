@@ -15,6 +15,7 @@ import com.google.firebase.ktx.Firebase
 import com.slgi.slgiapp.data.EventNetworkDataSource
 import com.slgi.slgiapp.data.EventRepository
 import com.slgi.slgiapp.ui.UpcomingEventsScreenViewModel
+import com.slgi.slgiapp.ui.shared.EventCard
 import com.slgi.slgiapp.ui.shared.SLGINavBar
 import kotlinx.coroutines.flow.toList
 
@@ -36,7 +37,18 @@ fun UpcomingEventsScreen(viewModel: UpcomingEventsScreenViewModel) {
     ) { innerPadding ->
         LazyColumn(Modifier.padding(innerPadding)) {
             items(items = events.value, key = { it.id }) {
-                Text(it.name)
+                EventCard(
+                    eventImage = null,
+                    eventName = it.name,
+                    eventDescription = it.description,
+                    eventDate = it.date,
+                    eventTime = it.time,
+                    eventNumberOfParticipants = it.participants.toString(),
+                    eventFireleader = it.fireLeader,
+                    buttonText = "Participate"
+                ) {
+
+                }
             }
         }
     }
