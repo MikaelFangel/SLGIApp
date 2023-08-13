@@ -35,8 +35,8 @@ fun UpcomingEventsScreen(viewModel: UpcomingEventsScreenViewModel) {
                     eventImage = null,
                     eventName = it.name,
                     eventDescription = it.description,
-                    eventDate = (SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(it.date.toDate())).toString(),
-                    eventTime = (SimpleDateFormat("HH:mm", Locale.getDefault()).format(it.time.toDate().time)).toString(),
+                    eventDate = (SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(it.dateAndTime.toDate())).toString(),
+                    eventTime = (SimpleDateFormat("HH:mm", Locale.getDefault()).format(it.dateAndTime.toDate().time)).toString(),
                     eventNumberOfParticipants = it.participants.toString(),
                     eventFireleader = it.fireleader,
                     buttonText = "Participate"

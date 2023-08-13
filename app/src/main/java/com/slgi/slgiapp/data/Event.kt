@@ -11,7 +11,6 @@ data class Event(
     val imageUrl: String = "",
     val participants: Long = 0,
     val userParticipation: Boolean = false,
-    val date: Timestamp = Timestamp(Date(0)),
-    val time: Timestamp = Timestamp(0,0),
+    val dateAndTime: Timestamp = Timestamp(0, 0),
     val fireleader: String = "",
 )

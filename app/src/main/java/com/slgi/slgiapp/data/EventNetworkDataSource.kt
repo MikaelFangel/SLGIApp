@@ -16,7 +16,6 @@ class EventNetworkDataSource {
 
     companion object {
         private const val EVENT_COLLECTION = "Events"
-        private const val DATE_FIELD = "date"
-        private const val TIME_FIELD = "time"
+        private const val DATE_FIELD = "dateAndTime"
     }
 }
