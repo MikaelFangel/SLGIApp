@@ -33,6 +33,7 @@ fun UpcomingEventsScreen(viewModel: UpcomingEventsScreenViewModel) {
     ) { innerPadding ->
         LazyColumn(Modifier.padding(innerPadding)) {
             items(items = events.value, key = { it.id }) {
+                val participants = viewModel.getParticipantFlow(it.id)?.collectAsState(initial = emptyList())
                 EventCard(
                     eventImage = null,
                     eventName = it.name,
@@ -47,7 +48,7 @@ fun UpcomingEventsScreen(viewModel: UpcomingEventsScreenViewModel) {
                     ).format(it.dateAndTime.toDate().time)).toString(),
                     eventNumberOfParticipants = it.participants.toString(),
                     eventFireleader = it.fireleader,
-                    buttonText = "Participate"
+                    buttonText = if (participants != null && participants.value.isEmpty()) "Participate" else "Resign"
                 ) {
                     CoroutineScope(Dispatchers.IO).launch {
                         viewModel.toggleParticipation(it.id)

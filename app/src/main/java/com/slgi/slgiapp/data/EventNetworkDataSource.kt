@@ -33,13 +33,23 @@ class EventNetworkDataSource : EventDateSourceApi {
         }
     }
 
-    override suspend fun isParticipating(eventId: String): Boolean {
+    private suspend fun isParticipating(eventId: String): Boolean {
         val userId = Firebase.auth.uid ?: return false
 
         // Check if user is registered or not
         return participantCollection(eventId)
             .whereEqualTo(USERID_FIELD, userId)
             .get().await().documents.isNotEmpty()
+    }
+
+    override fun getParticipantFlow(eventId: String): Flow<List<User>>? {
+        val userId = Firebase.auth.uid ?: return null
+
+        return eventCollection
+            .document(eventId)
+            .collection(PARTICIPATION_COLLECTION)
+            .whereEqualTo(USERID_FIELD, userId)
+            .dataObjects()
     }
 
     private fun participantCollection(eventId: String): CollectionReference =
