@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">SLGIApp</string>
+    <string name="organization_name">SLGI Skytteforening</string>
     <string name="nav_label_profile">Profil</string>
     <string name="nav_label_my_events">Mine</string>
     <string name="nav_label_upcoming_events">Kommende</string>
