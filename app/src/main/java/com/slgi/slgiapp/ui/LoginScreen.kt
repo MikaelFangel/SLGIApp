@@ -48,11 +48,11 @@ import com.slgi.slgiapp.R
 import com.slgi.slgiapp.ui.theme.SLGIAppTheme
 
 @Composable
-fun LoginScreen(loginAction: () -> Unit,
-                requestAction: () -> Unit,
-                forgotPasswordAction: (Int) -> Unit
-    )
-    {
+fun LoginScreen(
+    loginAction: () -> Unit,
+    requestAction: () -> Unit,
+    forgotPasswordAction: (Int) -> Unit
+) {
     SLGIAppTheme(dynamicColor = false) {
         Surface(modifier = Modifier.fillMaxSize(1F)) {
             Column(
@@ -97,8 +97,8 @@ fun LoginScreen(loginAction: () -> Unit,
                         val image = if (passwordVisible)
                             Icons.Outlined.Visibility
                         else Icons.Outlined.VisibilityOff
-                        IconButton(onClick = {passwordVisible = !passwordVisible}){
-                            Icon(imageVector  = image, contentDescription = null)
+                        IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                            Icon(imageVector = image, contentDescription = null)
                         }
                     }
                 )
@@ -113,9 +113,10 @@ fun LoginScreen(loginAction: () -> Unit,
                 {
                     Button(
                         onClick = requestAction,
-                        border = BorderStroke(2.dp,MaterialTheme.colorScheme.primary),
+                        border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary),
                         colors = ButtonDefaults.buttonColors(
-                            MaterialTheme.colorScheme.surface),
+                            MaterialTheme.colorScheme.surface
+                        ),
                         modifier = Modifier
                             .width(100.dp)
                             .height(40.dp)
@@ -123,17 +124,21 @@ fun LoginScreen(loginAction: () -> Unit,
                     Button(
                         onClick = loginAction,
                         colors = ButtonDefaults.buttonColors(
-                            MaterialTheme.colorScheme.primary),
+                            MaterialTheme.colorScheme.primary
+                        ),
                         modifier = Modifier
                             .width(100.dp)
                             .height(40.dp)
                     ) { Text(text = "login") }
                 }
                 Spacer(modifier = Modifier.height(10.dp))
-                ClickableText(text = AnnotatedString("Jeg har glemt mit kodeord"),
+                ClickableText(
+                    text = AnnotatedString("Jeg har glemt mit kodeord"),
                     onClick = forgotPasswordAction,
-                    style = TextStyle(color = MaterialTheme.colorScheme.primary,
-                        textDecoration = TextDecoration.Underline)
+                    style = TextStyle(
+                        color = MaterialTheme.colorScheme.primary,
+                        textDecoration = TextDecoration.Underline
+                    )
                 )
             }
         }
@@ -144,5 +149,5 @@ fun LoginScreen(loginAction: () -> Unit,
 @Preview
 @Composable
 fun LoginScreenPreview() {
-    LoginScreen( {}, {}, {})
+    LoginScreen({}, {}, {})
 }

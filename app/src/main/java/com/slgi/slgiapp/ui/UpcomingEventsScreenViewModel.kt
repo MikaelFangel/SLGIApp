@@ -10,5 +10,6 @@ class UpcomingEventsScreenViewModel(
     val events = eventRepository.events
 
     suspend fun toggleParticipation(id: String) = eventRepository.toggleParticipation(id)
-    fun getParticipantFlow(eventId: String): Flow<List<User>>? = eventRepository.getParticipantFlow(eventId)
+    fun getParticipantFlow(eventId: String): Flow<List<User>>? =
+        eventRepository.getParticipantFlow(eventId)
 }

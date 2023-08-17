@@ -14,7 +14,7 @@ import com.slgi.slgiapp.ui.theme.SLGIAppTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBar(barTitle: String){
+fun TopBar(barTitle: String) {
     TopAppBar(title = {
         Text(text = barTitle)
     },
@@ -22,15 +22,16 @@ fun TopBar(barTitle: String){
             Icon(
                 Icons.Default.KeyboardArrowLeft,
                 contentDescription = null
-            )}
+            )
+        }
     )
 }
 
 
-@Preview (showBackground = true)
+@Preview(showBackground = true)
 @Composable
-fun TopBarPreview(){
-    SLGIAppTheme(dynamicColor = false){
+fun TopBarPreview() {
+    SLGIAppTheme(dynamicColor = false) {
         Surface() {
             TopBar("Profil Oplysninger")
         }

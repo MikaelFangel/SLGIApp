@@ -33,7 +33,8 @@ fun UpcomingEventsScreen(viewModel: UpcomingEventsScreenViewModel) {
     ) { innerPadding ->
         LazyColumn(Modifier.padding(innerPadding)) {
             items(items = events.value, key = { it.id }) {
-                val participants = viewModel.getParticipantFlow(it.id)?.collectAsState(initial = emptyList())
+                val participants =
+                    viewModel.getParticipantFlow(it.id)?.collectAsState(initial = emptyList())
                 EventCard(
                     eventImage = null,
                     eventName = it.name,
