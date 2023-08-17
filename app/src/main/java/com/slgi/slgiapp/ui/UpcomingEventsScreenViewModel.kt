@@ -12,4 +12,6 @@ class UpcomingEventsScreenViewModel(
     suspend fun toggleParticipation(id: String) = eventRepository.toggleParticipation(id)
     fun getParticipantFlow(eventId: String): Flow<List<User>>? =
         eventRepository.getParticipantFlow(eventId)
+
+    fun getParticipants(eventId: String) = eventRepository.getParticipants(eventId)
 }

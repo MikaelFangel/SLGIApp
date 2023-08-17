@@ -52,6 +52,13 @@ class EventNetworkDataSource : EventDateSourceApi {
             .dataObjects()
     }
 
+    override fun getParticipants(eventId: String): Flow<List<User>> {
+        return eventCollection
+            .document(eventId)
+            .collection(PARTICIPATION_COLLECTION)
+            .dataObjects()
+    }
+
     private fun participantCollection(eventId: String): CollectionReference =
         eventCollection.document(eventId).collection(PARTICIPATION_COLLECTION)
 

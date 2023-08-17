@@ -35,8 +35,10 @@ fun UpcomingEventsScreen(viewModel: UpcomingEventsScreenViewModel) {
     ) { innerPadding ->
         LazyColumn(Modifier.padding(innerPadding)) {
             items(items = events.value, key = { it.id }) {
-                val participants =
+                val userParticipation =
                     viewModel.getParticipantFlow(it.id)?.collectAsState(initial = emptyList())
+                val participants =
+                    viewModel.getParticipants(it.id).collectAsState(initial = emptyList())
                 EventCard(
                     eventImage = null,
                     eventName = it.name,
@@ -49,9 +51,9 @@ fun UpcomingEventsScreen(viewModel: UpcomingEventsScreenViewModel) {
                         "HH:mm",
                         Locale.getDefault()
                     ).format(it.dateAndTime.toDate().time)).toString(),
-                    eventNumberOfParticipants = it.participants.toString(),
+                    eventNumberOfParticipants = participants.value.size.toString(),
                     eventFireleader = it.fireleader,
-                    buttonText = if (participants != null && participants.value.isEmpty())
+                    buttonText = if (userParticipation != null && userParticipation.value.isEmpty())
                         stringResource(R.string.participate) else stringResource(R.string.resign)
                 ) {
                     CoroutineScope(Dispatchers.IO).launch {
