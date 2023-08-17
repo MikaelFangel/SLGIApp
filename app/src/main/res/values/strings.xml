@@ -5,4 +5,6 @@
     <string name="nav_label_my_events">Mine</string>
     <string name="nav_label_upcoming_events">Kommende</string>
     <string name="nav_label_requests">Anmodninger</string>
+    <string name="participate">Deltager</string>
+    <string name="resign">Afmeld</string>
 </resources>

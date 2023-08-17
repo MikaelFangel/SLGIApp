@@ -8,6 +8,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.slgi.slgiapp.R
 import com.slgi.slgiapp.ui.shared.EventCard
 import com.slgi.slgiapp.ui.shared.SLGINavBar
 import kotlinx.coroutines.CoroutineScope
@@ -49,7 +51,8 @@ fun UpcomingEventsScreen(viewModel: UpcomingEventsScreenViewModel) {
                     ).format(it.dateAndTime.toDate().time)).toString(),
                     eventNumberOfParticipants = it.participants.toString(),
                     eventFireleader = it.fireleader,
-                    buttonText = if (participants != null && participants.value.isEmpty()) "Participate" else "Resign"
+                    buttonText = if (participants != null && participants.value.isEmpty())
+                        stringResource(R.string.participate) else stringResource(R.string.resign)
                 ) {
                     CoroutineScope(Dispatchers.IO).launch {
                         viewModel.toggleParticipation(it.id)
