@@ -14,18 +14,19 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.VisibilityOff
 import androidx.compose.material.icons.outlined.Visibility
-import androidx.compose.material3.*
+import androidx.compose.material.icons.outlined.VisibilityOff
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -39,7 +40,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
@@ -49,6 +49,7 @@ import com.slgi.slgiapp.ui.theme.SLGIAppTheme
 
 @Composable
 fun LoginScreen(
+    viewModel: LoginScreenViewModel,
     loginAction: () -> Unit,
     requestAction: () -> Unit,
     forgotPasswordAction: (Int) -> Unit
@@ -76,23 +77,21 @@ fun LoginScreen(
 
                 Spacer(modifier = Modifier.height(20.dp))
 
-                val username = remember { mutableStateOf(TextFieldValue()) }
-                val password = remember { mutableStateOf(TextFieldValue()) }
                 var passwordVisible by rememberSaveable { mutableStateOf(false) }
 
                 OutlinedTextField(
                     label = { Text(text = "E-mail") },
-                    value = username.value,
-                    onValueChange = { username.value = it }
+                    value = viewModel.uiState.value.email,
+                    onValueChange = { viewModel.onEmailChange(it) }
                 )
 
                 Spacer(modifier = Modifier.height(10.dp))
                 OutlinedTextField(
                     label = { Text(text = "Password") },
-                    value = password.value,
+                    value = viewModel.uiState.value.password,
                     visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                    onValueChange = { password.value = it },
+                    onValueChange = { viewModel.onPasswordChange(it) },
                     trailingIcon = {
                         val image = if (passwordVisible)
                             Icons.Outlined.Visibility
@@ -149,5 +148,5 @@ fun LoginScreen(
 @Preview
 @Composable
 fun LoginScreenPreview() {
-    LoginScreen({}, {}, {})
+    LoginScreen(LoginScreenViewModel(), {}, {}, {})
 }
