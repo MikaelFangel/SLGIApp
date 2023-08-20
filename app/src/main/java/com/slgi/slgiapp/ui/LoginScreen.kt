@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -22,7 +21,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -46,7 +44,6 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.slgi.slgiapp.R
-import com.slgi.slgiapp.ui.theme.SLGIAppTheme
 
 @Composable
 fun LoginScreen(
@@ -57,93 +54,89 @@ fun LoginScreen(
 ) {
     val uiState = viewModel.uiState.collectAsState()
 
-    SLGIAppTheme(dynamicColor = false) {
-        Surface(modifier = Modifier.fillMaxSize(1F)) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Spacer(modifier = Modifier.height(50.dp))
-                Text(
-                    text = stringResource(id = R.string.organization_name),
-                    color = MaterialTheme.colorScheme.onSurface,
-                    fontWeight = FontWeight.Bold
-                )
-                Spacer(modifier = Modifier.height(15.dp))
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Spacer(modifier = Modifier.height(50.dp))
+        Text(
+            text = stringResource(id = R.string.organization_name),
+            color = MaterialTheme.colorScheme.onSurface,
+            fontWeight = FontWeight.Bold
+        )
+        Spacer(modifier = Modifier.height(15.dp))
 
-                Image(
-                    ImageBitmap.imageResource(id = R.drawable.pexels_maur_cio_mascaro_1592109),
-                    modifier = Modifier
-                        .height(200.dp),
-                    contentScale = ContentScale.Crop,
-                    contentDescription = null
-                )
+        Image(
+            ImageBitmap.imageResource(id = R.drawable.pexels_maur_cio_mascaro_1592109),
+            modifier = Modifier
+                .height(200.dp),
+            contentScale = ContentScale.Crop,
+            contentDescription = null
+        )
 
-                Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(20.dp))
 
-                var passwordVisible by rememberSaveable { mutableStateOf(false) }
+        var passwordVisible by rememberSaveable { mutableStateOf(false) }
 
-                OutlinedTextField(
-                    label = { Text(text = "E-mail") },
-                    value = uiState.value.email,
-                    onValueChange = { viewModel.onEmailChange(it) }
-                )
+        OutlinedTextField(
+            label = { Text(text = "E-mail") },
+            value = uiState.value.email,
+            onValueChange = { viewModel.onEmailChange(it) }
+        )
 
-                Spacer(modifier = Modifier.height(10.dp))
-                OutlinedTextField(
-                    label = { Text(text = "Password") },
-                    value = uiState.value.password,
-                    visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                    onValueChange = { viewModel.onPasswordChange(it) },
-                    trailingIcon = {
-                        val image = if (passwordVisible)
-                            Icons.Outlined.Visibility
-                        else Icons.Outlined.VisibilityOff
-                        IconButton(onClick = { passwordVisible = !passwordVisible }) {
-                            Icon(imageVector = image, contentDescription = null)
-                        }
-                    }
-                )
-
-                Spacer(modifier = Modifier.height(20.dp))
-                Row(
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(80.dp, 0.dp)
-                )
-                {
-                    Button(
-                        onClick = requestAction,
-                        border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary),
-                        colors = ButtonDefaults.buttonColors(
-                            MaterialTheme.colorScheme.surface
-                        ),
-                        modifier = Modifier
-                            .width(100.dp)
-                            .height(40.dp)
-                    ) { Text(text = "Anmod", color = MaterialTheme.colorScheme.primary) }
-                    Button(
-                        onClick = loginAction,
-                        colors = ButtonDefaults.buttonColors(
-                            MaterialTheme.colorScheme.primary
-                        ),
-                        modifier = Modifier
-                            .width(100.dp)
-                            .height(40.dp)
-                    ) { Text(text = "login") }
+        Spacer(modifier = Modifier.height(10.dp))
+        OutlinedTextField(
+            label = { Text(text = "Password") },
+            value = uiState.value.password,
+            visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            onValueChange = { viewModel.onPasswordChange(it) },
+            trailingIcon = {
+                val image = if (passwordVisible)
+                    Icons.Outlined.Visibility
+                else Icons.Outlined.VisibilityOff
+                IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                    Icon(imageVector = image, contentDescription = null)
                 }
-                Spacer(modifier = Modifier.height(10.dp))
-                ClickableText(
-                    text = AnnotatedString("Jeg har glemt mit kodeord"),
-                    onClick = forgotPasswordAction,
-                    style = TextStyle(
-                        color = MaterialTheme.colorScheme.primary,
-                        textDecoration = TextDecoration.Underline
-                    )
-                )
             }
+        )
+
+        Spacer(modifier = Modifier.height(20.dp))
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(80.dp, 0.dp)
+        )
+        {
+            Button(
+                onClick = requestAction,
+                border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary),
+                colors = ButtonDefaults.buttonColors(
+                    MaterialTheme.colorScheme.surface
+                ),
+                modifier = Modifier
+                    .width(100.dp)
+                    .height(40.dp)
+            ) { Text(text = "Anmod", color = MaterialTheme.colorScheme.primary) }
+            Button(
+                onClick = loginAction,
+                colors = ButtonDefaults.buttonColors(
+                    MaterialTheme.colorScheme.primary
+                ),
+                modifier = Modifier
+                    .width(100.dp)
+                    .height(40.dp)
+            ) { Text(text = "login") }
         }
+        Spacer(modifier = Modifier.height(10.dp))
+        ClickableText(
+            text = AnnotatedString("Jeg har glemt mit kodeord"),
+            onClick = forgotPasswordAction,
+            style = TextStyle(
+                color = MaterialTheme.colorScheme.primary,
+                textDecoration = TextDecoration.Underline
+            )
+        )
     }
 }
 
