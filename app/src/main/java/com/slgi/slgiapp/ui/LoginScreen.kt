@@ -25,6 +25,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -54,6 +55,8 @@ fun LoginScreen(
     requestAction: () -> Unit,
     forgotPasswordAction: (Int) -> Unit
 ) {
+    val uiState = viewModel.uiState.collectAsState()
+
     SLGIAppTheme(dynamicColor = false) {
         Surface(modifier = Modifier.fillMaxSize(1F)) {
             Column(
@@ -81,14 +84,14 @@ fun LoginScreen(
 
                 OutlinedTextField(
                     label = { Text(text = "E-mail") },
-                    value = viewModel.uiState.value.email,
+                    value = uiState.value.email,
                     onValueChange = { viewModel.onEmailChange(it) }
                 )
 
                 Spacer(modifier = Modifier.height(10.dp))
                 OutlinedTextField(
                     label = { Text(text = "Password") },
-                    value = viewModel.uiState.value.password,
+                    value = uiState.value.password,
                     visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                     onValueChange = { viewModel.onPasswordChange(it) },
