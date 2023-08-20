@@ -21,13 +21,16 @@ import androidx.compose.material.icons.outlined.WatchLater
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Divider
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -50,6 +53,7 @@ fun EventCard(
     eventNumberOfParticipants: String,
     eventFireleader: String,
     buttonText: String,
+    participating: Boolean,
     buttonOnClickAction: () -> Unit
 ) {
     ElevatedCard(
@@ -101,7 +105,7 @@ fun EventCard(
             Spacer(modifier = Modifier.height(10.dp))
 
             // General information about the event
-            Divider()
+            HorizontalDivider()
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier
@@ -126,7 +130,7 @@ fun EventCard(
                     information = eventNumberOfParticipants
                 )
             }
-            Divider()
+            HorizontalDivider()
             Spacer(modifier = Modifier.height(5.dp))
 
             // Fireleader information and button for participation
@@ -137,7 +141,7 @@ fun EventCard(
                 Column(modifier = Modifier.weight(1f)) {
                     EventInformation(Icons.Outlined.Person, null, eventFireleader)
                 }
-                ParticipationButton(buttonText, buttonOnClickAction)
+                ParticipationButton(buttonText, participating, buttonOnClickAction)
             }
         }
     }
@@ -161,11 +165,12 @@ fun EventInformation(icon: ImageVector, contentDescription: String?, information
 }
 
 @Composable
-fun ParticipationButton(buttonText: String, onClickAction: () -> Unit) {
+fun ParticipationButton(buttonText: String, participating: Boolean, onClickAction: () -> Unit) {
     Button(
         onClick = onClickAction,
-        colors = ButtonDefaults.buttonColors(
-            MaterialTheme.colorScheme.primaryContainer
+        colors =
+        ButtonDefaults.buttonColors(
+            if (participating) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.errorContainer,
         )
     ) {
         Text(
@@ -188,7 +193,8 @@ fun EventCardPreview() {
                 eventTime = "10:00-13:00",
                 eventNumberOfParticipants = "10",
                 eventFireleader = "A. Andersen",
-                buttonText = "Button Text"
+                buttonText = "Button Text",
+                participating = true
             ) {
             }
         }

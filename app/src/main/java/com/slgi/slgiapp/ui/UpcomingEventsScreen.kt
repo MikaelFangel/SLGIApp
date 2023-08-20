@@ -54,7 +54,8 @@ fun UpcomingEventsScreen(viewModel: UpcomingEventsScreenViewModel) {
                     eventNumberOfParticipants = participants.value.size.toString(),
                     eventFireleader = it.fireleader,
                     buttonText = if (userParticipation != null && userParticipation.value.isEmpty())
-                        stringResource(R.string.participate) else stringResource(R.string.resign)
+                        stringResource(R.string.participate) else stringResource(R.string.resign),
+                    participating = (userParticipation != null && userParticipation.value.isEmpty())
                 ) {
                     CoroutineScope(Dispatchers.IO).launch {
                         viewModel.toggleParticipation(it.id)
