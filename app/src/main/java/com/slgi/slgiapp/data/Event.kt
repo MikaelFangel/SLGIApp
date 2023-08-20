@@ -7,7 +7,7 @@ data class Event(
     @DocumentId val id: String = "",
     val name: String = "",
     val description: String = "",
-    val imageUrl: String = "",
+    val imageUrl: String? = null,
     val dateAndTime: Timestamp = Timestamp(0, 0),
     val fireleader: String = "",
 )

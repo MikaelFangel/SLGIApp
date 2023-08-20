@@ -40,7 +40,7 @@ fun UpcomingEventsScreen(viewModel: UpcomingEventsScreenViewModel) {
                 val participants =
                     viewModel.getParticipants(it.id).collectAsState(initial = emptyList())
                 EventCard(
-                    eventImage = null,
+                    eventImageURL = it.imageUrl,
                     eventName = it.name,
                     eventDescription = it.description,
                     eventDate = (SimpleDateFormat(

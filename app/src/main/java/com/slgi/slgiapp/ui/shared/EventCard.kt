@@ -40,12 +40,13 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.slgi.slgiapp.R
 import com.slgi.slgiapp.ui.theme.SLGIAppTheme
 
 @Composable
 fun EventCard(
-    eventImage: ImageBitmap?,
+    eventImageURL: String?,
     eventName: String,
     eventDescription: String,
     eventDate: String,
@@ -66,9 +67,9 @@ fun EventCard(
                 .fillMaxWidth()
                 .height(140.dp)
         ) {
-            if (eventImage != null) {
-                Image(
-                    eventImage,
+            if (eventImageURL != null) {
+                AsyncImage(
+                    eventImageURL,
                     modifier = Modifier.clip(shape = CardDefaults.elevatedShape),
                     contentScale = ContentScale.Crop,
                     contentDescription = null
@@ -186,7 +187,7 @@ fun EventCardPreview() {
     SLGIAppTheme(dynamicColor = false) {
         Surface {
             EventCard(
-                eventImage = ImageBitmap.imageResource(id = R.drawable.pexels_maur_cio_mascaro_1592109),
+                eventImageURL = null,
                 eventName = "Event Name",
                 eventDescription = "Event Description",
                 eventDate = "1. maj 2023",
