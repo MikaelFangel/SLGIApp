@@ -1,5 +1,6 @@
 package com.slgi.slgiapp.ui
 
+import android.os.DeadObjectException
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -44,6 +45,12 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.slgi.slgiapp.R
+import com.slgi.slgiapp.data.LoginNetworkDataSource
+import com.slgi.slgiapp.data.LoginRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.lang.Exception
 
 @Composable
 fun LoginScreen(
@@ -119,7 +126,19 @@ fun LoginScreen(
                     .height(40.dp)
             ) { Text(text = "Anmod", color = MaterialTheme.colorScheme.primary) }
             Button(
-                onClick = loginAction,
+                onClick = {
+                    // Block the main thread until login
+                    CoroutineScope(Dispatchers.Main).launch {
+                        try {
+                            viewModel.login()
+                            loginAction()
+                        } catch (e: Exception) {
+                            // TODO Implement logic for failed login
+                        }
+                    }
+
+
+                },
                 colors = ButtonDefaults.buttonColors(
                     MaterialTheme.colorScheme.primary
                 ),
@@ -144,5 +163,5 @@ fun LoginScreen(
 @Preview
 @Composable
 fun LoginScreenPreview() {
-    LoginScreen(LoginScreenViewModel(), {}, {}, {})
+    LoginScreen(LoginScreenViewModel(LoginRepository(LoginNetworkDataSource())), {}, {}, {})
 }

@@ -8,6 +8,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.slgi.slgiapp.data.EventNetworkDataSource
 import com.slgi.slgiapp.data.EventRepository
+import com.slgi.slgiapp.data.LoginNetworkDataSource
+import com.slgi.slgiapp.data.LoginRepository
 import com.slgi.slgiapp.ui.LoginScreen
 import com.slgi.slgiapp.ui.LoginScreenViewModel
 import com.slgi.slgiapp.ui.UpcomingEventsScreen
@@ -23,7 +25,7 @@ fun SLGINavHost(
     navController: NavHostController = rememberNavController(),
 ) {
     val loginScreenViewModel = remember {
-        LoginScreenViewModel()
+        LoginScreenViewModel(LoginRepository(LoginNetworkDataSource()))
     }
     val upcomingEventsScreenViewModel = remember {
         UpcomingEventsScreenViewModel(
