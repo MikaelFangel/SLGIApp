@@ -43,7 +43,11 @@ fun SLGINavHost(
         composable(Screens.LOGIN_SCREEN.name) {
             LoginScreen(
                 viewModel = loginScreenViewModel,
-                loginAction = { /*TODO*/ },
+                loginAction = {
+                              navController.navigate(Screens.UPCOMING_SCREEN.name) {
+                                  popUpTo(0)
+                              }
+                },
                 requestAction = { /*TODO*/ },
                 forgotPasswordAction = {
                     /* TODO */
