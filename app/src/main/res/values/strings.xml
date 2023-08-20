@@ -7,4 +7,9 @@
     <string name="nav_label_requests">Anmodninger</string>
     <string name="participate">Deltager</string>
     <string name="resign">Afmeld</string>
+    <string name="emailLabel">E-mail</string>
+    <string name="passwordLable">Password</string>
+    <string name="requestButton">Anmod</string>
+    <string name="login">Login</string>
+    <string name="forgotpswd">Jeg har glemt mit kodeord</string>
 </resources>

@@ -85,14 +85,14 @@ fun LoginScreen(
         var passwordVisible by rememberSaveable { mutableStateOf(false) }
 
         OutlinedTextField(
-            label = { Text(text = "E-mail") },
+            label = { Text(text = stringResource(id = R.string.emailLabel)) },
             value = uiState.value.email,
             onValueChange = { viewModel.onEmailChange(it) }
         )
 
         Spacer(modifier = Modifier.height(10.dp))
         OutlinedTextField(
-            label = { Text(text = "Password") },
+            label = { Text(text = stringResource(id = R.string.passwordLable)) },
             value = uiState.value.password,
             visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
@@ -124,7 +124,7 @@ fun LoginScreen(
                 modifier = Modifier
                     .width(100.dp)
                     .height(40.dp)
-            ) { Text(text = "Anmod", color = MaterialTheme.colorScheme.primary) }
+            ) { Text(text = stringResource(id = R.string.requestButton), color = MaterialTheme.colorScheme.primary) }
             Button(
                 onClick = {
                     // Block the main thread until login
@@ -145,11 +145,11 @@ fun LoginScreen(
                 modifier = Modifier
                     .width(100.dp)
                     .height(40.dp)
-            ) { Text(text = "login") }
+            ) { Text(text = stringResource(id = R.string.login)) }
         }
         Spacer(modifier = Modifier.height(10.dp))
         ClickableText(
-            text = AnnotatedString("Jeg har glemt mit kodeord"),
+            text = AnnotatedString(stringResource(id = R.string.forgotpswd)),
             onClick = forgotPasswordAction,
             style = TextStyle(
                 color = MaterialTheme.colorScheme.primary,
