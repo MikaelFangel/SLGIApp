@@ -1,6 +1,5 @@
 package com.slgi.slgiapp.ui
 
-import android.os.DeadObjectException
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -11,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Visibility
@@ -35,13 +33,10 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.slgi.slgiapp.R
@@ -50,7 +45,6 @@ import com.slgi.slgiapp.data.LoginRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.lang.Exception
 
 @Composable
 fun LoginScreen(
@@ -68,7 +62,8 @@ fun LoginScreen(
         Text(
             text = stringResource(id = R.string.organization_name),
             color = MaterialTheme.colorScheme.onSurface,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
+            style = MaterialTheme.typography.headlineLarge
         )
         Spacer(modifier = Modifier.height(15.dp))
 
@@ -116,6 +111,7 @@ fun LoginScreen(
         )
         {
             Button(
+                enabled = false, // TODO implement button functionality
                 onClick = requestAction,
                 border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary),
                 colors = ButtonDefaults.buttonColors(
@@ -124,7 +120,12 @@ fun LoginScreen(
                 modifier = Modifier
                     .width(100.dp)
                     .height(40.dp)
-            ) { Text(text = stringResource(id = R.string.requestButton), color = MaterialTheme.colorScheme.primary) }
+            ) {
+                Text(
+                    text = stringResource(id = R.string.requestButton),
+                    color = MaterialTheme.colorScheme.primary
+                )
+            }
             Button(
                 onClick = {
                     // Block the main thread until login
@@ -148,14 +149,15 @@ fun LoginScreen(
             ) { Text(text = stringResource(id = R.string.login)) }
         }
         Spacer(modifier = Modifier.height(10.dp))
-        ClickableText(
-            text = AnnotatedString(stringResource(id = R.string.forgotpswd)),
-            onClick = forgotPasswordAction,
-            style = TextStyle(
-                color = MaterialTheme.colorScheme.primary,
-                textDecoration = TextDecoration.Underline
-            )
-        )
+        // TODO implement forgot password function
+        //ClickableText(
+        //    text = AnnotatedString(stringResource(id = R.string.forgotpswd)),
+        //    onClick = forgotPasswordAction,
+        //    style = TextStyle(
+        //        color = MaterialTheme.colorScheme.primary,
+        //        textDecoration = TextDecoration.Underline
+        //    )
+        // )
     }
 }
 
