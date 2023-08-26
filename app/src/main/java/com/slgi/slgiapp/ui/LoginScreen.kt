@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Visibility
@@ -29,11 +30,14 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -54,6 +58,7 @@ fun LoginScreen(
     forgotPasswordAction: (Int) -> Unit
 ) {
     val uiState = viewModel.uiState.collectAsState()
+    val focusManager = LocalFocusManager.current
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
@@ -82,7 +87,14 @@ fun LoginScreen(
         OutlinedTextField(
             label = { Text(text = stringResource(id = R.string.emailLabel)) },
             value = uiState.value.email,
-            onValueChange = { viewModel.onEmailChange(it) }
+            onValueChange = { viewModel.onEmailChange(it) },
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Email,
+                imeAction = ImeAction.Next
+            ),
+            keyboardActions = KeyboardActions(
+                onNext = { focusManager.moveFocus(FocusDirection.Down) }
+            )
         )
 
         Spacer(modifier = Modifier.height(10.dp))
@@ -90,7 +102,10 @@ fun LoginScreen(
             label = { Text(text = stringResource(id = R.string.passwordLable)) },
             value = uiState.value.password,
             visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Password,
+                imeAction = ImeAction.Done
+            ),
             onValueChange = { viewModel.onPasswordChange(it) },
             trailingIcon = {
                 val image = if (passwordVisible)
@@ -99,7 +114,17 @@ fun LoginScreen(
                 IconButton(onClick = { passwordVisible = !passwordVisible }) {
                     Icon(imageVector = image, contentDescription = null)
                 }
-            }
+            },
+            keyboardActions = KeyboardActions(onDone = {
+                CoroutineScope(Dispatchers.Main).launch {
+                    try {
+                        viewModel.login()
+                        loginAction()
+                    } catch (e: Exception) {
+                        // TODO Implement logic for failed login
+                    }
+                }
+            })
         )
 
         Spacer(modifier = Modifier.height(20.dp))
