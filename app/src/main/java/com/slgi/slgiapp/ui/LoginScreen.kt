@@ -136,7 +136,7 @@ fun LoginScreen(
         )
         {
             Button(
-                enabled = false, // TODO implement button functionality
+                enabled = true,
                 onClick = requestAction,
                 border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary),
                 colors = ButtonDefaults.buttonColors(
