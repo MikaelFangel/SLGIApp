@@ -63,11 +63,13 @@ class UpcomingEventsScreenViewModel(
             currentState.copy(
                 displayCreateDialog = false,
                 displayDateDialog = false,
+                displayTimeDialog = false,
                 newEventName = "",
                 newEventDescription = "",
                 newEventImageURL = "",
                 newEventFireLeader = "",
-                newEventDate = Timestamp(0,0)
+                newEventTime = Time(10,0,0),
+                newEventDate = Timestamp.now()
             )
         }
     }
