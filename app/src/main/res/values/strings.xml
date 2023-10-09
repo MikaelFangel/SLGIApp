@@ -9,7 +9,12 @@
     <string name="resign">Afmeld</string>
     <string name="emailLabel">E-mail</string>
     <string name="passwordLable">Password</string>
+    <string name="firstNameLabel">Fornavn</string>
+    <string name="lastNameLabel">Efternavn</string>
+    <string name="repeatPasswordLabel">Password igen</string>
+    <string name="acceptsTerms">Jeg acceptere betignelserne.</string>
     <string name="requestButton">Anmod</string>
+    <string name="requestAccessLabel">Anmod om adgang</string>
     <string name="login">Login</string>
     <string name="forgotpswd">Jeg har glemt mit kodeord</string>
 </resources>

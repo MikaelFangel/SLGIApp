@@ -16,21 +16,24 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.slgi.slgiapp.R
+import com.slgi.slgiapp.ui.shared.TopBar
 
 @Composable
 fun RegistrationScreen() {
     Scaffold (
-        topBar = { /* TODO Add topbar */ }
+        topBar = { TopBar(barTitle = stringResource(id = R.string.requestAccessLabel)) }
     ) {innerPadding ->
         Column(
-            Modifier.fillMaxSize().padding(innerPadding),
+            Modifier
+                .fillMaxSize()
+                .padding(innerPadding),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             OutlinedTextField(
-                label = { Text(text = "Fornavn") },
+                label = { Text(text = stringResource(id = R.string.firstNameLabel)) },
                 value = "", onValueChange = {})
             OutlinedTextField(
-                label = { Text(text = "Efternavn") },
+                label = { Text(text = stringResource(id = R.string.lastNameLabel)) },
                 value = "", onValueChange = {})
             OutlinedTextField(
                 label = { Text(text = stringResource(id = R.string.emailLabel)) },
@@ -39,16 +42,16 @@ fun RegistrationScreen() {
                 label = { Text(text = stringResource(id = R.string.passwordLable)) },
                 value = "", onValueChange = {})
             OutlinedTextField(
-                label = { Text(text = "Password igen") },
+                label = { Text(text = stringResource(id = R.string.repeatPasswordLabel)) },
                 value = "", onValueChange = {})
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Switch(checked = false, onCheckedChange = {})
                 Spacer(modifier = Modifier.padding(5.dp))
-                Text(text = "Jeg acceptere betignelserne.")
+                Text(text = stringResource(id = R.string.acceptsTerms))
             }
             Button(
                 onClick = { /*TODO*/ }) {
-                Text(text = "Anmod om adgang")
+                Text(text = stringResource(id = R.string.requestAccessLabel))
             }
         }
     }
