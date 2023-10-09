@@ -26,7 +26,8 @@ import java.util.Locale
 @Composable
 fun UpcomingEventsScreen(viewModel: UpcomingEventsScreenViewModel) {
     val events = viewModel.events.collectAsState(initial = emptyList())
-    val adminStatus = false
+    val adminStatus = true
+    val uiState = viewModel.uiState.collectAsState()
     Scaffold(
         bottomBar = {
             SLGINavBar(
@@ -38,18 +39,21 @@ fun UpcomingEventsScreen(viewModel: UpcomingEventsScreenViewModel) {
                 page = 1
             )
         },
-        floatingActionButton = { if (adminStatus)
-            IconButton(
-                onClick = { /*TODO*/ },
-                colors = IconButtonColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    contentColor = MaterialTheme.colorScheme.onPrimary,
-                    disabledContainerColor = MaterialTheme.colorScheme.errorContainer,
-                    disabledContentColor = MaterialTheme.colorScheme.error
-                )
+        floatingActionButton = {
+            if (adminStatus)
+                IconButton(
+                    onClick = {
+                        viewModel.showCreateDialog()
+                              },
+                    colors = IconButtonColors(
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        contentColor = MaterialTheme.colorScheme.onPrimary,
+                        disabledContainerColor = MaterialTheme.colorScheme.errorContainer,
+                        disabledContentColor = MaterialTheme.colorScheme.error
+                    )
                 ) {
-                    Icon(imageVector = Icons.Outlined.Add, contentDescription = "none" )
-            }
+                    Icon(imageVector = Icons.Outlined.Add, contentDescription = "none")
+                }
         }
     ) { innerPadding ->
         LazyColumn(Modifier.padding(innerPadding)) {
@@ -81,6 +85,10 @@ fun UpcomingEventsScreen(viewModel: UpcomingEventsScreenViewModel) {
                     }
                 }
             }
+        }
+
+        if (uiState.value.displayCreateDialog) {
+            CreateEventModal(viewModel = viewModel)
         }
     }
 }
