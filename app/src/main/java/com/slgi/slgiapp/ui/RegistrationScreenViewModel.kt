@@ -57,16 +57,17 @@ class RegistrationScreenViewModel : ViewModel() {
         }
     }
 
-    fun requestAccess() {
-        if (preChecks()) {
-            // TODO Implement request function
-        } else {
-            // TODO Implement error message
-        }
+    // TODO Implement the actual backend mecahnism to create users
+    fun requestAccess(): Boolean {
+        return preChecks()
     }
 
     private fun preChecks(): Boolean {
-        if (uiState.value.password != uiState.value.passwordRep)
+        // Check the passwords match
+        if (uiState.value.password != uiState.value.passwordRep || uiState.value.password.isEmpty())
+            return false
+        // Check that the user has accepted terms and cons
+        if (uiState.value.terms.not())
             return false
         return true
     }

@@ -22,13 +22,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.slgi.slgiapp.R
 import com.slgi.slgiapp.ui.shared.TopBar
 
 @Composable
-fun RegistrationScreen(viewModel: RegistrationScreenViewModel) {
+fun RegistrationScreen(viewModel: RegistrationScreenViewModel, onRequest: () -> Unit) {
     Scaffold(
         topBar = { TopBar(barTitle = stringResource(id = R.string.requestAccessLabel)) }
     ) { innerPadding ->
@@ -103,7 +102,7 @@ fun RegistrationScreen(viewModel: RegistrationScreenViewModel) {
                 Text(text = stringResource(id = R.string.acceptsTerms))
             }
             Button(
-                onClick = { viewModel.requestAccess() }) {
+                onClick = { if (viewModel.requestAccess()) onRequest() }) {
                 Text(text = stringResource(id = R.string.requestAccessLabel))
             }
         }

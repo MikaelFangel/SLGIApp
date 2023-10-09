@@ -67,7 +67,11 @@ fun SLGINavHost(
             )
         }
         composable(Screens.REGISTRATION_SCREEN.name) {
-            RegistrationScreen(registrationScreenViewModel)
+            RegistrationScreen(registrationScreenViewModel) {
+                navController.navigate(Screens.LOGIN_SCREEN.name) {
+                    popUpTo(0)
+                }
+            }
         }
     }
 }
