@@ -21,6 +21,8 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.slgi.slgiapp.R
 import com.slgi.slgiapp.ui.shared.TopBar
@@ -74,6 +76,7 @@ fun RegistrationScreen(viewModel: RegistrationScreenViewModel) {
             OutlinedTextField(
                 label = { Text(text = stringResource(id = R.string.passwordLable)) },
                 value = uiState.value.password, onValueChange = { viewModel.onPasswordChange(it) },
+                visualTransformation = PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Password,
                     imeAction = ImeAction.Next
@@ -85,6 +88,7 @@ fun RegistrationScreen(viewModel: RegistrationScreenViewModel) {
             OutlinedTextField(
                 label = { Text(text = stringResource(id = R.string.repeatPasswordLabel)) },
                 value = uiState.value.passwordRep,
+                visualTransformation = PasswordVisualTransformation(),
                 onValueChange = { viewModel.onPasswordRepChange(it) },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Password,
