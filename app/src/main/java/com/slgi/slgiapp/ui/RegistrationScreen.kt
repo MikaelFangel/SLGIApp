@@ -13,6 +13,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
@@ -25,12 +26,13 @@ import com.slgi.slgiapp.R
 import com.slgi.slgiapp.ui.shared.TopBar
 
 @Composable
-fun RegistrationScreen() {
-    val focusManager = LocalFocusManager.current
-
+fun RegistrationScreen(viewModel: RegistrationScreenViewModel) {
     Scaffold(
         topBar = { TopBar(barTitle = stringResource(id = R.string.requestAccessLabel)) }
     ) { innerPadding ->
+        val uiState = viewModel.uiState.collectAsState()
+        val focusManager = LocalFocusManager.current
+
         Column(
             Modifier
                 .fillMaxSize()
@@ -39,7 +41,8 @@ fun RegistrationScreen() {
         ) {
             OutlinedTextField(
                 label = { Text(text = stringResource(id = R.string.firstNameLabel)) },
-                value = "", onValueChange = {},
+                value = uiState.value.firstname,
+                onValueChange = { viewModel.onFirstNameChange(it) },
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Next
                 ),
@@ -49,7 +52,7 @@ fun RegistrationScreen() {
             )
             OutlinedTextField(
                 label = { Text(text = stringResource(id = R.string.lastNameLabel)) },
-                value = "", onValueChange = {},
+                value = uiState.value.lastname, onValueChange = { viewModel.onLastNameChange(it) },
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Next
                 ),
@@ -59,7 +62,7 @@ fun RegistrationScreen() {
             )
             OutlinedTextField(
                 label = { Text(text = stringResource(id = R.string.emailLabel)) },
-                value = "", onValueChange = {},
+                value = uiState.value.email, onValueChange = { viewModel.onEmailChange(it) },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Email,
                     imeAction = ImeAction.Next
@@ -70,7 +73,7 @@ fun RegistrationScreen() {
             )
             OutlinedTextField(
                 label = { Text(text = stringResource(id = R.string.passwordLable)) },
-                value = "", onValueChange = {},
+                value = uiState.value.password, onValueChange = { viewModel.onPasswordChange(it) },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Password,
                     imeAction = ImeAction.Next
@@ -81,14 +84,17 @@ fun RegistrationScreen() {
             )
             OutlinedTextField(
                 label = { Text(text = stringResource(id = R.string.repeatPasswordLabel)) },
-                value = "", onValueChange = {},
+                value = uiState.value.passwordRep,
+                onValueChange = { viewModel.onPasswordRepChange(it) },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Password,
                     imeAction = ImeAction.Done
                 )
             )
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Switch(checked = false, onCheckedChange = {})
+                Switch(
+                    checked = uiState.value.terms,
+                    onCheckedChange = { viewModel.onTermsChange() })
                 Spacer(modifier = Modifier.padding(5.dp))
                 Text(text = stringResource(id = R.string.acceptsTerms))
             }

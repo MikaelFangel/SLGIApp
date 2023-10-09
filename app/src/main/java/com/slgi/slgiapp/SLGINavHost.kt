@@ -13,6 +13,7 @@ import com.slgi.slgiapp.data.LoginRepository
 import com.slgi.slgiapp.ui.LoginScreen
 import com.slgi.slgiapp.ui.LoginScreenViewModel
 import com.slgi.slgiapp.ui.RegistrationScreen
+import com.slgi.slgiapp.ui.RegistrationScreenViewModel
 import com.slgi.slgiapp.ui.UpcomingEventsScreen
 import com.slgi.slgiapp.ui.UpcomingEventsScreenViewModel
 
@@ -35,6 +36,9 @@ fun SLGINavHost(
                 EventNetworkDataSource()
             )
         )
+    }
+    val registrationScreenViewModel = remember {
+        RegistrationScreenViewModel()
     }
 
     NavHost(
@@ -63,7 +67,7 @@ fun SLGINavHost(
             )
         }
         composable(Screens.REGISTRATION_SCREEN.name) {
-            RegistrationScreen()
+            RegistrationScreen(registrationScreenViewModel)
         }
     }
 }
