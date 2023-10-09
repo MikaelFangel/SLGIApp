@@ -56,4 +56,18 @@ class RegistrationScreenViewModel : ViewModel() {
             )
         }
     }
+
+    fun requestAccess() {
+        if (preChecks()) {
+            // TODO Implement request function
+        } else {
+            // TODO Implement error message
+        }
+    }
+
+    private fun preChecks(): Boolean {
+        if (uiState.value.password != uiState.value.passwordRep)
+            return false
+        return true
+    }
 }

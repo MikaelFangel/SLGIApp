@@ -99,7 +99,7 @@ fun RegistrationScreen(viewModel: RegistrationScreenViewModel) {
                 Text(text = stringResource(id = R.string.acceptsTerms))
             }
             Button(
-                onClick = { /*TODO*/ }) {
+                onClick = { viewModel.requestAccess() }) {
                 Text(text = stringResource(id = R.string.requestAccessLabel))
             }
         }
