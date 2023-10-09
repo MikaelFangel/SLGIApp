@@ -17,9 +17,6 @@ fun SelectDateDialog(viewModel: UpcomingEventsScreenViewModel){
     val confirmEnabled = derivedStateOf { datePickerState.selectedDateMillis != null }
     DatePickerDialog(
         onDismissRequest = {
-            // Dismiss the dialog when the user clicks outside the dialog or on the back
-            // button. If you want to disable that functionality, simply use an empty
-            // onDismissRequest.
             viewModel.dismissDateDialog()
         },
         confirmButton = {
