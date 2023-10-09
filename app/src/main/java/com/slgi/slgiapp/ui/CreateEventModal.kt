@@ -45,6 +45,10 @@ import java.util.Locale
 fun CreateEventModal(viewModel: UpcomingEventsScreenViewModel) {
     val uiState = viewModel.uiState.collectAsState()
     val focusManager = LocalFocusManager.current
+    var timeDisplay = "hh:mm"
+    if (uiState.value.newEventHours != null && uiState.value.newEventMinutes != null){
+        timeDisplay = uiState.value.newEventHours.toString() + ":" + uiState.value.newEventMinutes.toString()
+    }
     Dialog(
         onDismissRequest = { viewModel.dismissCreateDialog() },
         properties = DialogProperties(
@@ -113,12 +117,11 @@ fun CreateEventModal(viewModel: UpcomingEventsScreenViewModel) {
                 Spacer(modifier = Modifier.height(5.dp))
                 OutlinedTextField(
                     label = { Text(text = "Time") },
-                    value = uiState.value.newEventTime.toString(),
+                    value = timeDisplay,
                     placeholder = { Text(text = "hh:mm")},
                     maxLines = 1,
-                    readOnly = true,
                     onValueChange = { /*TODO*/ },
-                    //readOnly = true,
+                    readOnly = true,
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Text,
                         imeAction = ImeAction.Next
@@ -204,14 +207,7 @@ fun CreateEventModal(viewModel: UpcomingEventsScreenViewModel) {
                 }
                 TextButton(
                     onClick = {
-                        /*viewModel.createEvent(
-                            Event(
-                                name = screenState.newEventName,
-                                description = screenState.newEventDescription,
-                                imageUrl = screenState.newEventImageURL,
-                                fireleader = screenState.newEventFireLeader
-                            )
-                        )*/
+                        viewModel.createEvent()
                         viewModel.dismissCreateDialog()
                     },
                     modifier = Modifier.width(100.dp)

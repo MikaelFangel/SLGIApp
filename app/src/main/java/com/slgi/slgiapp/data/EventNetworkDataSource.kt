@@ -59,6 +59,10 @@ class EventNetworkDataSource : EventDateSourceApi {
             .dataObjects()
     }
 
+    override fun createEvent(event: Event) {
+        eventCollection.add(event)
+    }
+
     private fun participantCollection(eventId: String): CollectionReference =
         eventCollection.document(eventId).collection(PARTICIPATION_COLLECTION)
 

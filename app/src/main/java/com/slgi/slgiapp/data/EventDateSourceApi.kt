@@ -8,4 +8,5 @@ interface EventDateSourceApi {
     suspend fun toggleParticipation(id: String)
     fun getParticipantFlow(eventId: String): Flow<List<User>>?
     fun getParticipants(eventId: String): Flow<List<User>>
+    fun createEvent(event: Event)
 }

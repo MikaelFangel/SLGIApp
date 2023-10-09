@@ -1,13 +1,15 @@
 package com.slgi.slgiapp.ui
 
 import com.google.firebase.Timestamp
+import com.slgi.slgiapp.data.Event
 import com.slgi.slgiapp.data.EventRepository
 import com.slgi.slgiapp.data.User
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import java.sql.Time
+import java.time.Instant
+import java.time.temporal.ChronoUnit
 import java.util.Date
 
 class UpcomingEventsScreenViewModel(
@@ -22,6 +24,22 @@ class UpcomingEventsScreenViewModel(
         eventRepository.getParticipantFlow(eventId)
 
     fun getParticipants(eventId: String) = eventRepository.getParticipants(eventId)
+    fun createEvent() {
+        val eventState = uiState.value
+        val addedTime: Instant = Instant.ofEpochSecond(eventState.newEventDate.seconds)
+                                .plus(eventState.newEventHours!!.toLong(), ChronoUnit.HOURS)
+                                .plus(eventState.newEventMinutes!!.toLong(), ChronoUnit.MINUTES)
+        val newtimestamp = Timestamp(addedTime.epochSecond, 0)
+        eventRepository.createEvent(
+            Event(
+                name = eventState.newEventName,
+                description = eventState.newEventDescription,
+                imageUrl = eventState.newEventImageURL,
+                fireleader = "",
+                dateAndTime = newtimestamp
+            )
+        )
+    }
 
     fun showCreateDialog(){
         _uiState.update { currentState ->
@@ -68,7 +86,8 @@ class UpcomingEventsScreenViewModel(
                 newEventDescription = "",
                 newEventImageURL = "",
                 newEventFireLeader = "",
-                newEventTime = Time(10,0,0),
+                newEventHours = null,
+                newEventMinutes = null,
                 newEventDate = Timestamp.now()
             )
         }
@@ -105,7 +124,8 @@ class UpcomingEventsScreenViewModel(
     fun setNewEventTime(hour: Int, minute: Int) {
         _uiState.update { currentState ->
             currentState.copy(
-                newEventTime = Time(hour,  minute ,0)
+                newEventHours = hour,
+                newEventMinutes = minute
             )
         }
     }
