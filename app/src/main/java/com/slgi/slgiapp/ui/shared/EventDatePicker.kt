@@ -14,7 +14,7 @@ import com.slgi.slgiapp.ui.UpcomingEventsScreenViewModel
 @Composable
 fun SelectDateDialog(viewModel: UpcomingEventsScreenViewModel){
     val datePickerState = rememberDatePickerState()
-    val confirmEnabled = derivedStateOf { datePickerState.selectedDateMillis != null }
+    var confirmEnabled = derivedStateOf { datePickerState.selectedDateMillis != null }
     DatePickerDialog(
         onDismissRequest = {
             viewModel.dismissDateDialog()
