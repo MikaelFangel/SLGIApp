@@ -167,6 +167,9 @@ fun CreateEventModal(viewModel: UpcomingEventsScreenViewModel) {
                         }
                     }
                 )
+                //
+                //  Not activated due to not being sure how firebase would handle it...
+                //
                 /*Spacer(modifier = Modifier.height(5.dp))
                 OutlinedTextField(
                     label = { Text(text = "Image URL") },
@@ -181,12 +184,12 @@ fun CreateEventModal(viewModel: UpcomingEventsScreenViewModel) {
                     keyboardActions = KeyboardActions(
                         onNext = { focusManager.moveFocus(FocusDirection.Down) }
                     ),
-                    /*trailingIcon = {
+                    trailingIcon = {
                         Icon(
                             imageVector = Icons.Outlined.Image,
                             contentDescription = "Choose image"
                         )
-                    }*/
+                    }
                 )*/
             }
             Spacer(modifier = Modifier.height(5.dp))
@@ -210,11 +213,12 @@ fun CreateEventModal(viewModel: UpcomingEventsScreenViewModel) {
                         viewModel.createEvent()
                         viewModel.dismissCreateDialog()
                     },
-                    modifier = Modifier.width(100.dp)
+                    modifier = Modifier.width(100.dp),
+                    enabled = !(uiState.value.newEventName.length <= 1 && uiState.value.newEventHours == null && uiState.value.newEventMinutes == null)
                 ) {
                     Text(
                         text = "Create",
-                        color = MaterialTheme.colorScheme.primary
+                        //color = MaterialTheme.colorScheme.primary
                     )
                 }
             }
