@@ -7,14 +7,13 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
 import com.slgi.slgiapp.ui.UpcomingEventsScreenViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SelectDateDialog(viewModel: UpcomingEventsScreenViewModel){
     val datePickerState = rememberDatePickerState()
-    var confirmEnabled = derivedStateOf { datePickerState.selectedDateMillis != null }
+
     DatePickerDialog(
         onDismissRequest = {
             viewModel.dismissDateDialog()
@@ -26,7 +25,7 @@ fun SelectDateDialog(viewModel: UpcomingEventsScreenViewModel){
                     datePickerState.selectedDateMillis?.let { viewModel.setNewEventDate(it) }
 
                 },
-                enabled = confirmEnabled.value
+                enabled = datePickerState.selectedDateMillis != null
             ) {
                 Text("OK")
             }
