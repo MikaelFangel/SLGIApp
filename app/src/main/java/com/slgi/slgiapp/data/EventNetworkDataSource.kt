@@ -1,17 +1,17 @@
 package com.slgi.slgiapp.data
 
 import com.google.firebase.Timestamp
-import com.google.firebase.auth.ktx.auth
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.dataObjects
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.tasks.await
 
 class EventNetworkDataSource : EventDateSourceApi {
     private val eventCollection: CollectionReference
-        get() = Firebase.firestore
+        get() = FirebaseFirestore
+            .getInstance()
             .collection(EVENT_COLLECTION)
 
     override val events: Flow<List<Event>>
@@ -21,7 +21,11 @@ class EventNetworkDataSource : EventDateSourceApi {
             .dataObjects()
 
     override suspend fun toggleParticipation(eventId: String) {
-        val userId = Firebase.auth.uid ?: return
+        if (FirebaseAuth.getInstance().currentUser == null) {
+            return
+        }
+
+        val userId = FirebaseAuth.getInstance().currentUser!!.uid
 
         if (!isParticipating(eventId)) {
             participantCollection(eventId).add(User(userId = userId)).await()
@@ -34,7 +38,11 @@ class EventNetworkDataSource : EventDateSourceApi {
     }
 
     private suspend fun isParticipating(eventId: String): Boolean {
-        val userId = Firebase.auth.uid ?: return false
+        if (FirebaseAuth.getInstance().currentUser == null) {
+            return false
+        }
+
+        val userId = FirebaseAuth.getInstance().currentUser!!.uid
 
         // Check if user is registered or not
         return participantCollection(eventId)
@@ -43,7 +51,10 @@ class EventNetworkDataSource : EventDateSourceApi {
     }
 
     override fun getParticipantFlow(eventId: String): Flow<List<User>>? {
-        val userId = Firebase.auth.uid ?: return null
+        if (FirebaseAuth.getInstance().currentUser == null) {
+            return null
+        }
+        val userId = FirebaseAuth.getInstance().currentUser!!.uid
 
         return eventCollection
             .document(eventId)
