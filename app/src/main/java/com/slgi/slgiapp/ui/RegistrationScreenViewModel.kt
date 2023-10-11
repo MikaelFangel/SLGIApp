@@ -1,11 +1,14 @@
 package com.slgi.slgiapp.ui
 
 import androidx.lifecycle.ViewModel
+import com.slgi.slgiapp.data.Request
+import com.slgi.slgiapp.data.RequestDataSourceApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
-class RegistrationScreenViewModel : ViewModel() {
+class RegistrationScreenViewModel(private val requestRepository: RequestDataSourceApi) :
+    ViewModel() {
     private val _uiState = MutableStateFlow(RegistrationScreenState())
     val uiState = _uiState.asStateFlow()
 
@@ -57,8 +60,19 @@ class RegistrationScreenViewModel : ViewModel() {
         }
     }
 
-    // TODO Implement the actual backend mecahnism to create users
-    fun requestAccess(): Boolean {
+    // TODO implement checks properly
+    suspend fun requestAccess(): Boolean {
+        if (preChecks()) {
+            val req = Request(
+                "",
+                uiState.value.firstname,
+                uiState.value.lastname,
+                uiState.value.email,
+                uiState.value.password
+            )
+
+            requestRepository.requestAccess(req)
+        }
         return preChecks()
     }
 

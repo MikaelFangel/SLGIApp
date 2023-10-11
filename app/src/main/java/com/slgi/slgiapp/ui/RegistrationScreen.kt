@@ -25,6 +25,9 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import com.slgi.slgiapp.R
 import com.slgi.slgiapp.ui.shared.TopBar
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @Composable
 fun RegistrationScreen(viewModel: RegistrationScreenViewModel, onRequest: () -> Unit) {
@@ -102,7 +105,13 @@ fun RegistrationScreen(viewModel: RegistrationScreenViewModel, onRequest: () -> 
                 Text(text = stringResource(id = R.string.acceptsTerms))
             }
             Button(
-                onClick = { if (viewModel.requestAccess()) onRequest() }) {
+                // TODO Improve screen change handling
+                onClick = {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        viewModel.requestAccess()
+                    }
+                    onRequest()
+                }) {
                 Text(text = stringResource(id = R.string.requestAccessLabel))
             }
         }

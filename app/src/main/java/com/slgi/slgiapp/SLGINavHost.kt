@@ -10,6 +10,8 @@ import com.slgi.slgiapp.data.EventNetworkDataSource
 import com.slgi.slgiapp.data.EventRepository
 import com.slgi.slgiapp.data.LoginNetworkDataSource
 import com.slgi.slgiapp.data.LoginRepository
+import com.slgi.slgiapp.data.RequestDataSource
+import com.slgi.slgiapp.data.RequestRepository
 import com.slgi.slgiapp.ui.LoginScreen
 import com.slgi.slgiapp.ui.LoginScreenViewModel
 import com.slgi.slgiapp.ui.RegistrationScreen
@@ -38,7 +40,7 @@ fun SLGINavHost(
         )
     }
     val registrationScreenViewModel = remember {
-        RegistrationScreenViewModel()
+        RegistrationScreenViewModel(RequestRepository(RequestDataSource()))
     }
 
     NavHost(

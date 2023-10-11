@@ -1,7 +1,7 @@
 package com.slgi.slgiapp.ui.shared
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
@@ -20,7 +20,7 @@ fun TopBar(barTitle: String) {
     },
         navigationIcon = {
             Icon(
-                Icons.Default.KeyboardArrowLeft,
+                Icons.AutoMirrored.Filled.KeyboardArrowLeft,
                 contentDescription = null
             )
         }
