@@ -14,6 +14,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.CalendarMonth
 import androidx.compose.material.icons.outlined.Cancel
+import androidx.compose.material.icons.outlined.Image
 import androidx.compose.material.icons.outlined.Timer
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
@@ -169,10 +170,7 @@ fun CreateEventModal(viewModel: UpcomingEventsScreenViewModel) {
                         }
                     }
                 )
-                //
-                //  Not activated due to not being sure how firebase would handle it...
-                //
-                /*Spacer(modifier = Modifier.height(5.dp))
+                Spacer(modifier = Modifier.height(5.dp))
                 OutlinedTextField(
                     label = { Text(text = "Image URL") },
                     value = uiState.value.newEventImageURL,
@@ -192,7 +190,7 @@ fun CreateEventModal(viewModel: UpcomingEventsScreenViewModel) {
                             contentDescription = "Choose image"
                         )
                     }
-                )*/
+                )
                 Spacer(modifier = Modifier.height(5.dp))
                 OutlinedTextField(
                     label = { Text(text = "FireLeader") },

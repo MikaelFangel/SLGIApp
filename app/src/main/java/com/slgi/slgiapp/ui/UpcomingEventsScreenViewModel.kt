@@ -35,7 +35,7 @@ class UpcomingEventsScreenViewModel(
                 name = eventState.newEventName,
                 description = eventState.newEventDescription,
                 imageUrl = eventState.newEventImageURL,
-                fireleader = "",
+                fireleader = eventState.newEventFireLeader,
                 dateAndTime = newtimestamp
             )
         )
