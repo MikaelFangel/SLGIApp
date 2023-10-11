@@ -32,12 +32,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import com.slgi.slgiapp.R
 import com.slgi.slgiapp.ui.UpcomingEventsScreenViewModel
 import java.util.Locale
 
@@ -70,7 +72,7 @@ fun CreateEventModal(viewModel: UpcomingEventsScreenViewModel) {
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(
-                        text = "Create Event",
+                        text = stringResource(id = R.string.createEventTitle),
                         fontWeight = FontWeight.Bold
                     )
                     IconButton(
@@ -79,7 +81,7 @@ fun CreateEventModal(viewModel: UpcomingEventsScreenViewModel) {
                     ) {
                         Icon(
                             imageVector = Icons.Outlined.Cancel,
-                            contentDescription = "cancel"
+                            contentDescription = stringResource(id = R.string.cancel)
                         )
                     }
                 }
@@ -87,7 +89,7 @@ fun CreateEventModal(viewModel: UpcomingEventsScreenViewModel) {
                 HorizontalDivider()
                 Spacer(modifier = Modifier.height(5.dp))
                 OutlinedTextField(
-                    label = { Text(text = "Event name") },
+                    label = { Text(text = stringResource(id = R.string.eventName)) },
                     value = uiState.value.newEventName,
                     enabled = true,
                     maxLines = 1,
@@ -97,12 +99,12 @@ fun CreateEventModal(viewModel: UpcomingEventsScreenViewModel) {
                         imeAction = ImeAction.Next
                     ),
                     keyboardActions = KeyboardActions(
-                        onNext = { /* TODO */ }
+                        onNext = { focusManager.moveFocus(FocusDirection.Down) }
                     )
                 )
                 Spacer(modifier = Modifier.height(5.dp))
                 OutlinedTextField(
-                    label = { Text(text = "Description") },
+                    label = { Text(text = stringResource(id = R.string.description)) },
                     value = uiState.value.newEventDescription,
                     enabled = true,
                     maxLines = 4,
@@ -117,7 +119,7 @@ fun CreateEventModal(viewModel: UpcomingEventsScreenViewModel) {
                 )
                 Spacer(modifier = Modifier.height(5.dp))
                 OutlinedTextField(
-                    label = { Text(text = "Time") },
+                    label = { Text(text = stringResource(id = R.string.time)) },
                     value = timeDisplay,
                     placeholder = { Text(text = "hh:mm") },
                     maxLines = 1,
@@ -136,14 +138,14 @@ fun CreateEventModal(viewModel: UpcomingEventsScreenViewModel) {
                         ) {
                             Icon(
                                 imageVector = Icons.Outlined.Timer,
-                                contentDescription = "Choose date"
+                                contentDescription = stringResource(id = R.string.chooseTime)
                             )
                         }
                     }
                 )
                 Spacer(modifier = Modifier.height(5.dp))
                 OutlinedTextField(
-                    label = { Text(text = "Date") },
+                    label = { Text(text = stringResource(id = R.string.date)) },
                     value = SimpleDateFormat(
                         "dd/MM/yyyy",
                         Locale.getDefault()
@@ -165,14 +167,14 @@ fun CreateEventModal(viewModel: UpcomingEventsScreenViewModel) {
                         ) {
                             Icon(
                                 imageVector = Icons.Outlined.CalendarMonth,
-                                contentDescription = "Choose date"
+                                contentDescription = stringResource(id = R.string.chooseDate)
                             )
                         }
                     }
                 )
                 Spacer(modifier = Modifier.height(5.dp))
                 OutlinedTextField(
-                    label = { Text(text = "Image URL") },
+                    label = { Text(text = stringResource(id = R.string.imageUrl)) },
                     value = uiState.value.newEventImageURL,
                     maxLines = 1,
                     enabled = true,
@@ -187,13 +189,13 @@ fun CreateEventModal(viewModel: UpcomingEventsScreenViewModel) {
                     trailingIcon = {
                         Icon(
                             imageVector = Icons.Outlined.Image,
-                            contentDescription = "Choose image"
+                            contentDescription = stringResource(id = R.string.chooseImage)
                         )
                     }
                 )
                 Spacer(modifier = Modifier.height(5.dp))
                 OutlinedTextField(
-                    label = { Text(text = "FireLeader") },
+                    label = { Text(text = stringResource(id = R.string.Fireleader)) },
                     value = uiState.value.newEventFireLeader,
                     enabled = true,
                     maxLines = 4,
@@ -219,7 +221,7 @@ fun CreateEventModal(viewModel: UpcomingEventsScreenViewModel) {
                     modifier = Modifier.width(100.dp)
                 ) {
                     Text(
-                        text = "Cancel",
+                        text = stringResource(id = R.string.cancel),
                         color = MaterialTheme.colorScheme.onErrorContainer
                     )
                 }
@@ -232,7 +234,7 @@ fun CreateEventModal(viewModel: UpcomingEventsScreenViewModel) {
                     enabled = !(uiState.value.newEventName.length <= 1 && uiState.value.newEventHours == null && uiState.value.newEventMinutes == null)
                 ) {
                     Text(
-                        text = "Create",
+                        text = stringResource(id = R.string.create),
                         //color = MaterialTheme.colorScheme.primary
                     )
                 }

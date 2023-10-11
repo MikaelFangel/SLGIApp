@@ -17,4 +17,16 @@
     <string name="requestAccessLabel">Anmod om adgang</string>
     <string name="login">Login</string>
     <string name="forgotpswd">Jeg har glemt mit kodeord</string>
+    <string name="createEventTitle">Opret Begivenhed</string>
+    <string name="eventName">Begivenheds navn</string>
+    <string name="description">Beskrivelse</string>
+    <string name="time">Tid</string>
+    <string name="chooseTime">Vælg tidspunkt</string>
+    <string name="chooseDate">Vælg dato</string>
+    <string name="date">Dato</string>
+    <string name="imageUrl">Billede URL</string>
+    <string name="chooseImage">Vælg billede</string>
+    <string name="Fireleader">Skydeleder</string>
+    <string name="create">Opret</string>
+    <string name="cancel">Afbryd</string>
 </resources>
