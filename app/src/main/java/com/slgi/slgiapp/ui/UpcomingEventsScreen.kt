@@ -24,10 +24,14 @@ import kotlinx.coroutines.launch
 import java.util.Locale
 
 @Composable
-fun UpcomingEventsScreen(viewModel: UpcomingEventsScreenViewModel) {
+fun UpcomingEventsScreen(
+    viewModel: UpcomingEventsScreenViewModel,
+    loginScreenViewModel: LoginScreenViewModel
+) {
     val events = viewModel.events.collectAsState(initial = emptyList())
-    val adminStatus = true
     val uiState = viewModel.uiState.collectAsState()
+    val loginState = loginScreenViewModel.uiState.collectAsState()
+
     Scaffold(
         bottomBar = {
             SLGINavBar(
@@ -35,16 +39,16 @@ fun UpcomingEventsScreen(viewModel: UpcomingEventsScreenViewModel) {
                 onNavigateToUpcomingEvents = { /*TODO*/ },
                 onNavigateToProfile = { /*TODO*/ },
                 onNavigateToUserRequests = { /*TODO*/ },
-                admin = adminStatus,
+                admin = loginState.value.isAdmin,
                 page = 1
             )
         },
         floatingActionButton = {
-            if (adminStatus)
+            if (loginState.value.isAdmin)
                 IconButton(
                     onClick = {
                         viewModel.showCreateDialog()
-                              },
+                    },
                     colors = IconButtonColors(
                         containerColor = MaterialTheme.colorScheme.primary,
                         contentColor = MaterialTheme.colorScheme.onPrimary,
