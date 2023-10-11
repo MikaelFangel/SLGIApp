@@ -3,15 +3,15 @@ package com.slgi.slgiapp.data
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.dataObjects
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.tasks.await
 
 class EventNetworkDataSource : EventDateSourceApi {
     private val eventCollection: CollectionReference
-        get() = Firebase.firestore
+        get() = FirebaseFirestore
+            .getInstance()
             .collection(EVENT_COLLECTION)
 
     override val events: Flow<List<Event>>
