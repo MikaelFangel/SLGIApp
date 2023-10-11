@@ -78,7 +78,7 @@ fun CreateEventModal(viewModel: UpcomingEventsScreenViewModel) {
                     ) {
                         Icon(
                             imageVector = Icons.Outlined.Cancel,
-                            contentDescription = "canel"
+                            contentDescription = "cancel"
                         )
                     }
                 }
