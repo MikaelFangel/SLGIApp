@@ -3,14 +3,14 @@ package com.slgi.slgiapp.ui
 import com.google.firebase.Timestamp
 
 data class EventScreenState(
-    var displayCreateDialog: Boolean = false,
-    var displayDateDialog: Boolean = false,
-    var displayTimeDialog: Boolean = false,
-    var newEventName: String = "",
-    var newEventDescription: String = "",
-    var newEventHours : Int? = null,
-    var newEventMinutes: Int? = null,
-    var newEventDate: Timestamp = Timestamp.now(),
-    var newEventImageURL: String = "",
-    var newEventFireLeader: String = ""
+    val displayCreateDialog: Boolean = false,
+    val displayDateDialog: Boolean = false,
+    val displayTimeDialog: Boolean = false,
+    val newEventName: String = "",
+    val newEventDescription: String = "",
+    val newEventHours : Int? = null,
+    val newEventMinutes: Int? = null,
+    val newEventDate: Timestamp = Timestamp.now(),
+    val newEventImageURL: String = "",
+    val newEventFireLeader: String = ""
 )

@@ -16,6 +16,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.slgi.slgiapp.R
+import com.slgi.slgiapp.ui.shared.CreateEventModal
 import com.slgi.slgiapp.ui.shared.EventCard
 import com.slgi.slgiapp.ui.shared.SLGINavBar
 import kotlinx.coroutines.CoroutineScope

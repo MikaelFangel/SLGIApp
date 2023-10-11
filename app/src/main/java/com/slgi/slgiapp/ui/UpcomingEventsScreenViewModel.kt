@@ -76,6 +76,15 @@ class UpcomingEventsScreenViewModel(
             )
         }
     }
+
+    fun onFireLeaderChange(fireleader: String){
+        _uiState.update { currentState ->
+            currentState.copy(
+                newEventFireLeader = fireleader
+            )
+        }
+    }
+
     fun dismissCreateDialog(){
         _uiState.update { currentState ->
             currentState.copy(

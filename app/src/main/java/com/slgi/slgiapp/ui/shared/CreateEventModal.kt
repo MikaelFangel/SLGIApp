@@ -1,4 +1,4 @@
-package com.slgi.slgiapp.ui
+package com.slgi.slgiapp.ui.shared
 
 import android.icu.text.SimpleDateFormat
 import androidx.compose.foundation.layout.Arrangement
@@ -37,8 +37,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.slgi.slgiapp.ui.shared.SelectDateDialog
-import com.slgi.slgiapp.ui.shared.SelectTimeDialog
+import com.slgi.slgiapp.ui.UpcomingEventsScreenViewModel
 import java.util.Locale
 
 @Composable
@@ -46,8 +45,9 @@ fun CreateEventModal(viewModel: UpcomingEventsScreenViewModel) {
     val uiState = viewModel.uiState.collectAsState()
     val focusManager = LocalFocusManager.current
     var timeDisplay = "hh:mm"
-    if (uiState.value.newEventHours != null && uiState.value.newEventMinutes != null){
-        timeDisplay = uiState.value.newEventHours.toString() + ":" + uiState.value.newEventMinutes.toString()
+    if (uiState.value.newEventHours != null && uiState.value.newEventMinutes != null) {
+        timeDisplay =
+            uiState.value.newEventHours.toString() + ":" + uiState.value.newEventMinutes.toString()
     }
     Dialog(
         onDismissRequest = { viewModel.dismissCreateDialog() },
@@ -118,7 +118,7 @@ fun CreateEventModal(viewModel: UpcomingEventsScreenViewModel) {
                 OutlinedTextField(
                     label = { Text(text = "Time") },
                     value = timeDisplay,
-                    placeholder = { Text(text = "hh:mm")},
+                    placeholder = { Text(text = "hh:mm") },
                     maxLines = 1,
                     onValueChange = { /*TODO*/ },
                     readOnly = true,
@@ -143,9 +143,11 @@ fun CreateEventModal(viewModel: UpcomingEventsScreenViewModel) {
                 Spacer(modifier = Modifier.height(5.dp))
                 OutlinedTextField(
                     label = { Text(text = "Date") },
-                    value = SimpleDateFormat("dd/MM/yyyy",
-                        Locale.getDefault()).format(uiState.value.newEventDate.toDate()).toString(),
-                    placeholder = { Text(text = "dd/mm/yyyy")},
+                    value = SimpleDateFormat(
+                        "dd/MM/yyyy",
+                        Locale.getDefault()
+                    ).format(uiState.value.newEventDate.toDate()).toString(),
+                    placeholder = { Text(text = "dd/mm/yyyy") },
                     maxLines = 1,
                     onValueChange = { /*TODO*/ },
                     readOnly = true,
@@ -191,6 +193,21 @@ fun CreateEventModal(viewModel: UpcomingEventsScreenViewModel) {
                         )
                     }
                 )*/
+                Spacer(modifier = Modifier.height(5.dp))
+                OutlinedTextField(
+                    label = { Text(text = "FireLeader") },
+                    value = uiState.value.newEventFireLeader,
+                    enabled = true,
+                    maxLines = 4,
+                    onValueChange = { viewModel.onFireLeaderChange(it) },
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Text,
+                        imeAction = ImeAction.Next
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onNext = { focusManager.moveFocus(FocusDirection.Down) }
+                    )
+                )
             }
             Spacer(modifier = Modifier.height(5.dp))
             Row(
