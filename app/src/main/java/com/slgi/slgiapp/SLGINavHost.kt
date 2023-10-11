@@ -48,7 +48,10 @@ fun SLGINavHost(
         startDestination = Screens.LOGIN_SCREEN.name
     ) {
         composable(Screens.UPCOMING_SCREEN.name) {
-            UpcomingEventsScreen(viewModel = upcomingEventsScreenViewModel)
+            UpcomingEventsScreen(
+                viewModel = upcomingEventsScreenViewModel,
+                loginScreenViewModel = loginScreenViewModel,
+            )
         }
         composable(Screens.LOGIN_SCREEN.name) {
             LoginScreen(
