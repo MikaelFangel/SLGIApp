@@ -29,4 +29,6 @@
     <string name="Fireleader">Skydeleder</string>
     <string name="create">Opret</string>
     <string name="cancel">Afbryd</string>
+
+    <string name="logout">Log Af</string>
 </resources>

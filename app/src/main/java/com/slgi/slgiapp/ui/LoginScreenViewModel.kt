@@ -27,6 +27,12 @@ class LoginScreenViewModel(
         isAdmin()
     }
 
+    fun logout() {
+        CoroutineScope(Dispatchers.Main).launch {
+            loginRepository.logout()
+        }
+    }
+
     private fun isAdmin() {
         CoroutineScope(Dispatchers.Main).launch {
             _uiState.update { c ->

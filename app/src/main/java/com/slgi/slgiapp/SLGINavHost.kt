@@ -1,5 +1,7 @@
 package com.slgi.slgiapp
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.Logout
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.navigation.NavHostController
@@ -14,6 +16,7 @@ import com.slgi.slgiapp.data.RequestDataSource
 import com.slgi.slgiapp.data.RequestRepository
 import com.slgi.slgiapp.ui.LoginScreen
 import com.slgi.slgiapp.ui.LoginScreenViewModel
+import com.slgi.slgiapp.ui.ProfileScreen
 import com.slgi.slgiapp.ui.RegistrationScreen
 import com.slgi.slgiapp.ui.RegistrationScreenViewModel
 import com.slgi.slgiapp.ui.UpcomingEventsScreen
@@ -23,6 +26,7 @@ enum class Screens {
     LOGIN_SCREEN,
     UPCOMING_SCREEN,
     REGISTRATION_SCREEN,
+    PROFILE_SCREEN,
 }
 
 @Composable
@@ -77,6 +81,13 @@ fun SLGINavHost(
                     popUpTo(0)
                 }
             }
+        }
+        composable(Screens.PROFILE_SCREEN.name) {
+            ProfileScreen(
+                navigationMap = mapOf(
+                    R.string.logout to Pair(Icons.AutoMirrored.Outlined.Logout) { loginScreenViewModel.logout() }
+                )
+            )
         }
     }
 }
