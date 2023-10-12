@@ -4,12 +4,19 @@ import android.icu.text.SimpleDateFormat
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.slgi.slgiapp.R
+import com.slgi.slgiapp.ui.shared.CreateEventModal
 import com.slgi.slgiapp.ui.shared.EventCard
 import com.slgi.slgiapp.ui.shared.SLGINavBar
 import kotlinx.coroutines.CoroutineScope
@@ -18,8 +25,13 @@ import kotlinx.coroutines.launch
 import java.util.Locale
 
 @Composable
-fun UpcomingEventsScreen(viewModel: UpcomingEventsScreenViewModel) {
+fun UpcomingEventsScreen(
+    viewModel: UpcomingEventsScreenViewModel,
+    loginScreenViewModel: LoginScreenViewModel
+) {
     val events = viewModel.events.collectAsState(initial = emptyList())
+    val uiState = viewModel.uiState.collectAsState()
+    val loginState = loginScreenViewModel.uiState.collectAsState()
 
     Scaffold(
         bottomBar = {
@@ -28,9 +40,20 @@ fun UpcomingEventsScreen(viewModel: UpcomingEventsScreenViewModel) {
                 onNavigateToUpcomingEvents = { /*TODO*/ },
                 onNavigateToProfile = { /*TODO*/ },
                 onNavigateToUserRequests = { /*TODO*/ },
-                admin = false,
+                admin = loginState.value.isAdmin,
                 page = 1
             )
+        },
+        floatingActionButton = {
+            if (loginState.value.isAdmin) {
+                FloatingActionButton(
+                    onClick = { viewModel.showCreateDialog() },
+                    containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                    shape = CircleShape
+                ) {
+                    Icon(Icons.Default.Add, "")
+                }
+            }
         }
     ) { innerPadding ->
         LazyColumn(Modifier.padding(innerPadding)) {
@@ -62,6 +85,10 @@ fun UpcomingEventsScreen(viewModel: UpcomingEventsScreenViewModel) {
                     }
                 }
             }
+        }
+
+        if (uiState.value.displayCreateDialog) {
+            CreateEventModal(viewModel = viewModel)
         }
     }
 }
