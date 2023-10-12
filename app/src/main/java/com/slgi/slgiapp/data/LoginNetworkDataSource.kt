@@ -9,6 +9,10 @@ class LoginNetworkDataSource : LoginApi {
         FirebaseAuth.getInstance().signInWithEmailAndPassword(user.email, user.password).await()
     }
 
+    override suspend fun logout() {
+        FirebaseAuth.getInstance().signOut()
+    }
+
     override suspend fun isAdmin(): Boolean {
         return FirebaseFirestore.getInstance().collection("Admins").document(
             FirebaseAuth.getInstance().currentUser!!.uid

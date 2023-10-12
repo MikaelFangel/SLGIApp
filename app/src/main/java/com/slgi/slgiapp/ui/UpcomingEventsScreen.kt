@@ -18,7 +18,6 @@ import androidx.compose.ui.res.stringResource
 import com.slgi.slgiapp.R
 import com.slgi.slgiapp.ui.shared.CreateEventModal
 import com.slgi.slgiapp.ui.shared.EventCard
-import com.slgi.slgiapp.ui.shared.SLGINavBar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -27,23 +26,15 @@ import java.util.Locale
 @Composable
 fun UpcomingEventsScreen(
     viewModel: UpcomingEventsScreenViewModel,
-    loginScreenViewModel: LoginScreenViewModel
+    loginScreenViewModel: LoginScreenViewModel,
+    bottomBar: @Composable () -> Unit,
 ) {
     val events = viewModel.events.collectAsState(initial = emptyList())
     val uiState = viewModel.uiState.collectAsState()
     val loginState = loginScreenViewModel.uiState.collectAsState()
 
     Scaffold(
-        bottomBar = {
-            SLGINavBar(
-                onNavigateToMyEvents = { /*TODO*/ },
-                onNavigateToUpcomingEvents = { /*TODO*/ },
-                onNavigateToProfile = { /*TODO*/ },
-                onNavigateToUserRequests = { /*TODO*/ },
-                admin = loginState.value.isAdmin,
-                page = 1
-            )
-        },
+        bottomBar = bottomBar,
         floatingActionButton = {
             if (loginState.value.isAdmin) {
                 FloatingActionButton(
