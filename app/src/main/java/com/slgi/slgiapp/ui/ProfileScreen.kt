@@ -29,28 +29,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.slgi.slgiapp.R
-import com.slgi.slgiapp.ui.shared.SLGINavBar
 import com.slgi.slgiapp.ui.shared.TopBar
 import com.slgi.slgiapp.ui.theme.SLGIAppTheme
 
 @Composable
 fun ProfileScreen(
+    bottomBar: @Composable () -> Unit,
     navigationMap: Map<Int, Pair<ImageVector, () -> Unit>>
 ) {
     Scaffold(
         topBar = {
                  TopBar(barTitle = "Settings")
         },
-        bottomBar = {
-            SLGINavBar(
-                onNavigateToMyEvents = { /*TODO*/ },
-                onNavigateToUpcomingEvents = { /*TODO*/ },
-                onNavigateToProfile = { /*TODO*/ },
-                onNavigateToUserRequests = { /*TODO*/ },
-                page = 3,
-                admin = false
-            )
-        }
+        bottomBar = bottomBar
     )
     { innerPadding ->
         LazyColumn(
@@ -100,7 +91,9 @@ fun Profile(name: String) {
 fun ProfileScreenPreview() {
     SLGIAppTheme(dynamicColor = false) {
         Surface {
-            ProfileScreen(mapOf(
+            ProfileScreen(
+                {},
+                mapOf(
                 R.string.logout to Pair(Icons.AutoMirrored.Outlined.Logout) {}
             ))
         }

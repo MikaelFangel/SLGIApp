@@ -3,6 +3,7 @@ package com.slgi.slgiapp
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Logout
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -21,13 +22,7 @@ import com.slgi.slgiapp.ui.RegistrationScreen
 import com.slgi.slgiapp.ui.RegistrationScreenViewModel
 import com.slgi.slgiapp.ui.UpcomingEventsScreen
 import com.slgi.slgiapp.ui.UpcomingEventsScreenViewModel
-
-enum class Screens {
-    LOGIN_SCREEN,
-    UPCOMING_SCREEN,
-    REGISTRATION_SCREEN,
-    PROFILE_SCREEN,
-}
+import com.slgi.slgiapp.ui.shared.SLGINavBar
 
 @Composable
 fun SLGINavHost(
@@ -47,6 +42,8 @@ fun SLGINavHost(
         RegistrationScreenViewModel(RequestRepository(RequestDataSource()))
     }
 
+    val loginState = loginScreenViewModel.uiState.collectAsState()
+
     NavHost(
         navController = navController,
         startDestination = Screens.LOGIN_SCREEN.name
@@ -55,6 +52,16 @@ fun SLGINavHost(
             UpcomingEventsScreen(
                 viewModel = upcomingEventsScreenViewModel,
                 loginScreenViewModel = loginScreenViewModel,
+                bottomBar = {
+                    SLGINavBar(
+                        onNavigateToMyEvents = { /*TODO*/ },
+                        onNavigateToUpcomingEvents = { /* Left blank intentionally */ },
+                        onNavigateToProfile = { navController.navigate(Screens.PROFILE_SCREEN.name) },
+                        onNavigateToUserRequests = { /*TODO*/ },
+                        admin = loginState.value.isAdmin,
+                        page = Screens.UPCOMING_SCREEN.ordinal
+                    )
+                },
             )
         }
         composable(Screens.LOGIN_SCREEN.name) {
@@ -84,8 +91,24 @@ fun SLGINavHost(
         }
         composable(Screens.PROFILE_SCREEN.name) {
             ProfileScreen(
+                bottomBar = {
+                    SLGINavBar(
+                        onNavigateToMyEvents = { /*TODO*/ },
+                        onNavigateToUpcomingEvents = { navController.navigate(Screens.UPCOMING_SCREEN.name) },
+                        onNavigateToProfile = { /* Left blank intentionally */ },
+                        onNavigateToUserRequests = { /*TODO*/ },
+                        page = Screens.PROFILE_SCREEN.ordinal,
+                        admin = loginState.value.isAdmin
+                    )
+                },
+                // The map contains the prefix icon, the description, and the action to be performed onclick
                 navigationMap = mapOf(
-                    R.string.logout to Pair(Icons.AutoMirrored.Outlined.Logout) { loginScreenViewModel.logout() }
+                    R.string.logout to Pair(Icons.AutoMirrored.Outlined.Logout) {
+                        loginScreenViewModel.logout()
+                        navController.navigate(Screens.LOGIN_SCREEN.name) {
+                            popUpTo(0)
+                        }
+                    }
                 )
             )
         }

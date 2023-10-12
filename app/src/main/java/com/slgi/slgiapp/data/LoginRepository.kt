@@ -6,7 +6,7 @@ class LoginRepository(private val loginFirebaseDataSource: LoginApi) : LoginApi 
     }
 
     override suspend fun logout() {
-        TODO("Not yet implemented")
+        loginFirebaseDataSource.logout()
     }
 
     override suspend fun isAdmin(): Boolean {

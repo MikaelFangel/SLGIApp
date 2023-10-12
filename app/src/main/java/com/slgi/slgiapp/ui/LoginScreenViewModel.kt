@@ -28,7 +28,7 @@ class LoginScreenViewModel(
     }
 
     fun logout() {
-        CoroutineScope(Dispatchers.Main).launch {
+        CoroutineScope(Dispatchers.IO).launch {
             loginRepository.logout()
         }
     }
