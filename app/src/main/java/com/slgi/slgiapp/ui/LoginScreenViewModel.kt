@@ -43,6 +43,10 @@ class LoginScreenViewModel(
         }
     }
 
+    suspend fun resetPassword(email: String) {
+        loginRepository.resetPassword(email)
+    }
+
     fun onEmailChange(email: String) {
         _uiState.update { currentState ->
             currentState.copy(
