@@ -18,4 +18,8 @@ class LoginNetworkDataSource : LoginApi {
             FirebaseAuth.getInstance().currentUser!!.uid
         ).get().await().exists()
     }
+
+    override suspend fun resetPassword(email: String) {
+        FirebaseAuth.getInstance().sendPasswordResetEmail(email)
+    }
 }

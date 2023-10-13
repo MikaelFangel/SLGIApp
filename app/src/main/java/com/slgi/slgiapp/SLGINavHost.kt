@@ -23,6 +23,9 @@ import com.slgi.slgiapp.ui.RegistrationScreenViewModel
 import com.slgi.slgiapp.ui.UpcomingEventsScreen
 import com.slgi.slgiapp.ui.UpcomingEventsScreenViewModel
 import com.slgi.slgiapp.ui.shared.SLGINavBar
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @Composable
 fun SLGINavHost(
@@ -78,7 +81,9 @@ fun SLGINavHost(
                     }
                 },
                 forgotPasswordAction = {
-                    /* TODO */
+                    CoroutineScope(Dispatchers.IO).launch {
+                        loginScreenViewModel.resetPassword(loginState.value.email)
+                    }
                 }
             )
         }

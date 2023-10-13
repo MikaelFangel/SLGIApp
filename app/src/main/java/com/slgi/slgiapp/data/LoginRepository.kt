@@ -12,4 +12,8 @@ class LoginRepository(private val loginFirebaseDataSource: LoginApi) : LoginApi 
     override suspend fun isAdmin(): Boolean {
         return loginFirebaseDataSource.isAdmin()
     }
+
+    override suspend fun resetPassword(email: String) {
+        loginFirebaseDataSource.resetPassword(email)
+    }
 }
