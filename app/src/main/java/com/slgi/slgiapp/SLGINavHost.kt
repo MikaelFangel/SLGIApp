@@ -22,6 +22,8 @@ import com.slgi.slgiapp.ui.RegistrationScreen
 import com.slgi.slgiapp.ui.RegistrationScreenViewModel
 import com.slgi.slgiapp.ui.UpcomingEventsScreen
 import com.slgi.slgiapp.ui.UpcomingEventsScreenViewModel
+import com.slgi.slgiapp.ui.UserRequestsScreen
+import com.slgi.slgiapp.ui.UserRequestsViewModel
 import com.slgi.slgiapp.ui.shared.SLGINavBar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -39,6 +41,12 @@ fun SLGINavHost(
             EventRepository(
                 EventNetworkDataSource()
             )
+        )
+    }
+    val userRequestsViewModel = remember {
+        UserRequestsViewModel(
+            RequestRepository(RequestDataSource()),
+            LoginRepository(LoginNetworkDataSource())
         )
     }
     val registrationScreenViewModel = remember {
@@ -60,7 +68,7 @@ fun SLGINavHost(
                         onNavigateToMyEvents = { /*TODO*/ },
                         onNavigateToUpcomingEvents = { /* Left blank intentionally */ },
                         onNavigateToProfile = { navController.navigate(Screens.PROFILE_SCREEN.name) },
-                        onNavigateToUserRequests = { /*TODO*/ },
+                        onNavigateToUserRequests = { navController.navigate(Screens.REQUEST_SCREEN.name) },
                         admin = loginState.value.isAdmin,
                         page = Screens.UPCOMING_SCREEN.ordinal
                     )
@@ -94,6 +102,21 @@ fun SLGINavHost(
                 }
             }
         }
+        composable(Screens.REQUEST_SCREEN.name) {
+            UserRequestsScreen(
+                viewModel = userRequestsViewModel,
+                bottomBar = {
+                    SLGINavBar(
+                        onNavigateToMyEvents = { /*TODO*/ },
+                        onNavigateToUpcomingEvents = { navController.navigate(Screens.UPCOMING_SCREEN.name) },
+                        onNavigateToProfile = { navController.navigate(Screens.PROFILE_SCREEN.name) },
+                        onNavigateToUserRequests = { /* Left blank intentionally */ },
+                        admin = loginState.value.isAdmin,
+                        page = Screens.REQUEST_SCREEN.ordinal
+                    )
+                }
+            )
+        }
         composable(Screens.PROFILE_SCREEN.name) {
             ProfileScreen(
                 bottomBar = {
@@ -101,7 +124,7 @@ fun SLGINavHost(
                         onNavigateToMyEvents = { /*TODO*/ },
                         onNavigateToUpcomingEvents = { navController.navigate(Screens.UPCOMING_SCREEN.name) },
                         onNavigateToProfile = { /* Left blank intentionally */ },
-                        onNavigateToUserRequests = { /*TODO*/ },
+                        onNavigateToUserRequests = { navController.navigate(Screens.REQUEST_SCREEN.name) },
                         page = Screens.PROFILE_SCREEN.ordinal,
                         admin = loginState.value.isAdmin
                     )
