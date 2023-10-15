@@ -1,11 +1,23 @@
 package com.slgi.slgiapp
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Logout
 import androidx.compose.material.icons.outlined.DeleteForever
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -56,6 +68,21 @@ fun SLGINavHost(
     }
 
     val loginState = loginScreenViewModel.uiState.collectAsState()
+
+
+    // TODO Temporary delete user safety
+    val showSafetyDialog = remember {
+        mutableStateOf(false)
+    }
+    if (showSafetyDialog.value) {
+        safetyDialog(showSafetyDialog) {
+            loginScreenViewModel.deleteUser()
+            showSafetyDialog.value = false
+            navController.navigate(Screens.LOGIN_SCREEN.name) {
+                popUpTo(0)
+            }
+        }
+    }
 
     NavHost(
         navController = navController,
@@ -134,10 +161,7 @@ fun SLGINavHost(
                 // The map contains the prefix icon, the description, and the action to be performed onclick
                 navigationMap = mapOf(
                     R.string.deleteUser to Pair(Icons.Outlined.DeleteForever) {
-                        loginScreenViewModel.deleteUser()
-                        navController.navigate(Screens.LOGIN_SCREEN.name) {
-                            popUpTo(0)
-                        }
+                        showSafetyDialog.value = true
                     },
                     R.string.logout to Pair(Icons.AutoMirrored.Outlined.Logout) {
                         loginScreenViewModel.logout()
@@ -149,7 +173,7 @@ fun SLGINavHost(
                 goBackAction = { navController.popBackStack() }
             )
         }
-        composable(Screens.MYEVENTS_SCREEN.name){
+        composable(Screens.MYEVENTS_SCREEN.name) {
             MyEventsScreen(
                 viewModel = upcomingEventsScreenViewModel,
                 bottomBar = {
@@ -163,6 +187,31 @@ fun SLGINavHost(
                     )
                 },
             )
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun safetyDialog(show: MutableState<Boolean>, onConfirm: () -> Unit) {
+    AlertDialog(onDismissRequest = { show.value = false }) {
+        ElevatedCard {
+            Row(horizontalArrangement = Arrangement.End) {
+                Button(onClick = { show.value = false }) {
+                    Text(text = stringResource(id = R.string.cancel))
+                }
+                Button(
+                    onClick = { onConfirm() },
+                    colors = ButtonColors(
+                        containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                        contentColor = MaterialTheme.colorScheme.onTertiary,
+                        disabledContainerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                        disabledContentColor = MaterialTheme.colorScheme.onTertiary
+                    )
+                ) {
+                    Text(text = stringResource(id = R.string.approve))
+                }
+            }
         }
     }
 }
