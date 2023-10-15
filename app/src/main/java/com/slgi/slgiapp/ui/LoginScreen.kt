@@ -141,7 +141,13 @@ fun LoginScreen(
                             viewModel.login()
                             loginAction()
                         } catch (e: Exception) {
-                            // TODO Implement logic for failed login
+                            scope.launch {
+                                e.message?.let {
+                                    snackbarHostState.showSnackbar(
+                                        message = it
+                                    )
+                                }
+                            }
                         }
                     }
                 })
