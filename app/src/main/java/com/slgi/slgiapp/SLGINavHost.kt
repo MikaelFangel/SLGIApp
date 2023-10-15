@@ -145,7 +145,6 @@ fun SLGINavHost(
         composable(Screens.MYEVENTS_SCREEN.name){
             MyEventsScreen(
                 viewModel = upcomingEventsScreenViewModel,
-                loginScreenViewModel = loginScreenViewModel,
                 bottomBar = {
                     SLGINavBar(
                         onNavigateToMyEvents = { /* Left blank intentionally */ },
