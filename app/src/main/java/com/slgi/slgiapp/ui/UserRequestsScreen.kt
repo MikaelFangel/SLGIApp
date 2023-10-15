@@ -64,7 +64,7 @@ fun UserRequestsScreen(
                                 }) {
                                     Icon(
                                         imageVector = Icons.Outlined.Cancel,
-                                        contentDescription = " "
+                                        contentDescription = null
                                     )
                                 }
                                 IconButton(onClick = {
@@ -78,7 +78,7 @@ fun UserRequestsScreen(
                                 }) {
                                     Icon(
                                         imageVector = Icons.Outlined.Check,
-                                        contentDescription = " "
+                                        contentDescription = null
                                     )
                                 }
                             }
