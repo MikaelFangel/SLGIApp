@@ -1,10 +1,30 @@
 package com.slgi.slgiapp
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Logout
+import androidx.compose.material.icons.outlined.DeleteForever
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -17,6 +37,7 @@ import com.slgi.slgiapp.data.RequestDataSource
 import com.slgi.slgiapp.data.RequestRepository
 import com.slgi.slgiapp.ui.LoginScreen
 import com.slgi.slgiapp.ui.LoginScreenViewModel
+import com.slgi.slgiapp.ui.MyEventsScreen
 import com.slgi.slgiapp.ui.ProfileScreen
 import com.slgi.slgiapp.ui.RegistrationScreen
 import com.slgi.slgiapp.ui.RegistrationScreenViewModel
@@ -55,6 +76,21 @@ fun SLGINavHost(
 
     val loginState = loginScreenViewModel.uiState.collectAsState()
 
+
+    // TODO Temporary delete user safety
+    val showSafetyDialog = remember {
+        mutableStateOf(false)
+    }
+    if (showSafetyDialog.value) {
+        safetyDialog(showSafetyDialog) {
+            loginScreenViewModel.deleteUser()
+            showSafetyDialog.value = false
+            navController.navigate(Screens.LOGIN_SCREEN.name) {
+                popUpTo(0)
+            }
+        }
+    }
+
     NavHost(
         navController = navController,
         startDestination = Screens.LOGIN_SCREEN.name
@@ -65,7 +101,7 @@ fun SLGINavHost(
                 loginScreenViewModel = loginScreenViewModel,
                 bottomBar = {
                     SLGINavBar(
-                        onNavigateToMyEvents = { /*TODO*/ },
+                        onNavigateToMyEvents = { navController.navigate(Screens.MYEVENTS_SCREEN.name) },
                         onNavigateToUpcomingEvents = { /* Left blank intentionally */ },
                         onNavigateToProfile = { navController.navigate(Screens.PROFILE_SCREEN.name) },
                         onNavigateToUserRequests = { navController.navigate(Screens.REQUEST_SCREEN.name) },
@@ -96,7 +132,7 @@ fun SLGINavHost(
             )
         }
         composable(Screens.REGISTRATION_SCREEN.name) {
-            RegistrationScreen(registrationScreenViewModel) {
+            RegistrationScreen(registrationScreenViewModel, { navController.popBackStack() }) {
                 navController.navigate(Screens.LOGIN_SCREEN.name) {
                     popUpTo(0)
                 }
@@ -107,7 +143,7 @@ fun SLGINavHost(
                 viewModel = userRequestsViewModel,
                 bottomBar = {
                     SLGINavBar(
-                        onNavigateToMyEvents = { /*TODO*/ },
+                        onNavigateToMyEvents = { navController.navigate(Screens.MYEVENTS_SCREEN.name) },
                         onNavigateToUpcomingEvents = { navController.navigate(Screens.UPCOMING_SCREEN.name) },
                         onNavigateToProfile = { navController.navigate(Screens.PROFILE_SCREEN.name) },
                         onNavigateToUserRequests = { /* Left blank intentionally */ },
@@ -121,7 +157,7 @@ fun SLGINavHost(
             ProfileScreen(
                 bottomBar = {
                     SLGINavBar(
-                        onNavigateToMyEvents = { /*TODO*/ },
+                        onNavigateToMyEvents = { navController.navigate(Screens.MYEVENTS_SCREEN.name) },
                         onNavigateToUpcomingEvents = { navController.navigate(Screens.UPCOMING_SCREEN.name) },
                         onNavigateToProfile = { /* Left blank intentionally */ },
                         onNavigateToUserRequests = { navController.navigate(Screens.REQUEST_SCREEN.name) },
@@ -131,14 +167,65 @@ fun SLGINavHost(
                 },
                 // The map contains the prefix icon, the description, and the action to be performed onclick
                 navigationMap = mapOf(
+                    R.string.deleteUser to Pair(Icons.Outlined.DeleteForever) {
+                        showSafetyDialog.value = true
+                    },
                     R.string.logout to Pair(Icons.AutoMirrored.Outlined.Logout) {
                         loginScreenViewModel.logout()
                         navController.navigate(Screens.LOGIN_SCREEN.name) {
                             popUpTo(0)
                         }
                     }
-                )
+                ),
+                goBackAction = { navController.popBackStack() }
             )
+        }
+        composable(Screens.MYEVENTS_SCREEN.name) {
+            MyEventsScreen(
+                viewModel = upcomingEventsScreenViewModel,
+                bottomBar = {
+                    SLGINavBar(
+                        onNavigateToMyEvents = { /* Left blank intentionally */ },
+                        onNavigateToUpcomingEvents = { navController.navigate(Screens.UPCOMING_SCREEN.name) },
+                        onNavigateToProfile = { navController.navigate(Screens.PROFILE_SCREEN.name) },
+                        onNavigateToUserRequests = { navController.navigate(Screens.REQUEST_SCREEN.name) },
+                        admin = loginState.value.isAdmin,
+                        page = Screens.MYEVENTS_SCREEN.ordinal
+                    )
+                },
+            )
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun safetyDialog(show: MutableState<Boolean>, onConfirm: () -> Unit) {
+    AlertDialog(onDismissRequest = { show.value = false }) {
+        ElevatedCard {
+            Column(modifier = Modifier.padding(10.dp)) {
+                Text(text = stringResource(id = R.string.areYouSure))
+                Spacer(modifier = Modifier.size(10.dp))
+                Row(
+                    horizontalArrangement = Arrangement.End,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Button(onClick = { show.value = false }) {
+                        Text(text = stringResource(id = R.string.cancel))
+                    }
+                    Button(
+                        onClick = { onConfirm() },
+                        colors = ButtonColors(
+                            containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                            contentColor = MaterialTheme.colorScheme.onTertiary,
+                            disabledContainerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                            disabledContentColor = MaterialTheme.colorScheme.onTertiary
+                        )
+                    ) {
+                        Text(text = stringResource(id = R.string.approve))
+                    }
+                }
+            }
         }
     }
 }

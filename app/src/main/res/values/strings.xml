@@ -29,6 +29,14 @@
     <string name="Fireleader">Skydeleder</string>
     <string name="create">Opret</string>
     <string name="cancel">Afbryd</string>
+    <string name="noNewRequests">Der er ingen ventende andmodninger</string>
+    <string name="failedRequest">Din anmodning fejlede. Prøv igen!</string>
+    <string name="reset">Nulstil</string>
+    <string name="resetPassword">Nulstil mit kodeord</string>
+    <string name="deleteUser">Slet bruger</string>
+    <string name="approve">Godkend</string>
+    <string name="Settings">Indstillinger</string>
+    <string name="areYouSure">Er du sikker på at du ønsker at gennemføre handlingen? Denne handling kan ikke fortrydes når gennemført</string>
 
     <string name="logout">Log Af</string>
 </resources>

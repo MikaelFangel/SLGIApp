@@ -47,6 +47,12 @@ class LoginScreenViewModel(
         loginRepository.resetPassword(email)
     }
 
+    fun deleteUser() {
+        CoroutineScope(Dispatchers.IO).launch {
+            loginRepository.deleteUser()
+        }
+    }
+
     fun onEmailChange(email: String) {
         _uiState.update { currentState ->
             currentState.copy(

@@ -61,7 +61,8 @@ class RegistrationScreenViewModel(private val requestRepository: RequestDataSour
     }
 
     // TODO implement checks properly
-    suspend fun requestAccess(): Boolean {
+    @Throws(Exception::class)
+    suspend fun requestAccess() {
         if (preChecks()) {
             val req = Request(
                 "",
@@ -72,13 +73,22 @@ class RegistrationScreenViewModel(private val requestRepository: RequestDataSour
             )
 
             requestRepository.requestAccess(req)
+        } else {
+            throw Exception("Din anmodning fejlede. Prøv igen!")
         }
-        return preChecks()
     }
 
     private fun preChecks(): Boolean {
+        // Check that there is text in the name fields
+        if (uiState.value.firstname.isEmpty() || uiState.value.lastname.isEmpty())
+            return false
+        val emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\$"
+        if(uiState.value.email.matches(emailRegex.toRegex()).not())
+            return false
         // Check the passwords match
-        if (uiState.value.password != uiState.value.passwordRep || uiState.value.password.isEmpty())
+        if (uiState.value.password != uiState.value.passwordRep
+            || uiState.value.password.isEmpty()
+            || uiState.value.password.length < 8)
             return false
         // Check that the user has accepted terms and cons
         if (uiState.value.terms.not())

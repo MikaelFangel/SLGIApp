@@ -7,4 +7,5 @@ interface LoginApi {
     suspend fun isAdmin(): Boolean
     suspend fun resetPassword(email: String)
     fun addUser(email: String, password: String)
+    suspend fun deleteUser()
 }

@@ -35,11 +35,15 @@ import com.slgi.slgiapp.ui.theme.SLGIAppTheme
 @Composable
 fun ProfileScreen(
     bottomBar: @Composable () -> Unit,
-    navigationMap: Map<Int, Pair<ImageVector, () -> Unit>>
+    navigationMap: Map<Int, Pair<ImageVector, () -> Unit>>,
+    goBackAction: () -> Unit
 ) {
     Scaffold(
         topBar = {
-                 TopBar(barTitle = "Settings")
+            TopBar(
+                barTitle = stringResource(R.string.Settings),
+                goBackAction = goBackAction
+            )
         },
         bottomBar = bottomBar
     )
@@ -50,7 +54,7 @@ fun ProfileScreen(
                 .padding(innerPadding),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            item { Profile(name = "Name Here") }
+            item { Profile(name = "") }
             items(navigationMap.keys.toList()) { entry ->
                 ListItem(
                     leadingContent = {
@@ -94,8 +98,8 @@ fun ProfileScreenPreview() {
             ProfileScreen(
                 {},
                 mapOf(
-                R.string.logout to Pair(Icons.AutoMirrored.Outlined.Logout) {}
-            ))
+                    R.string.logout to Pair(Icons.AutoMirrored.Outlined.Logout) {}
+                ), {})
         }
     }
 }
