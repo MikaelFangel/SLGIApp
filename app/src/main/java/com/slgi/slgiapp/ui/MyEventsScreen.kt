@@ -4,12 +4,6 @@ import android.icu.text.SimpleDateFormat
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -26,26 +20,13 @@ import java.util.Locale
 @Composable
 fun MyEventsScreen(
     viewModel: UpcomingEventsScreenViewModel,
-    loginScreenViewModel: LoginScreenViewModel,
     bottomBar: @Composable () -> Unit,
 ) {
     val events = viewModel.events.collectAsState(initial = emptyList())
     val uiState = viewModel.uiState.collectAsState()
-    val loginState = loginScreenViewModel.uiState.collectAsState()
 
     Scaffold(
-        bottomBar = bottomBar,
-        floatingActionButton = {
-            if (loginState.value.isAdmin) {
-                FloatingActionButton(
-                    onClick = { viewModel.showCreateDialog() },
-                    containerColor = MaterialTheme.colorScheme.secondaryContainer,
-                    shape = CircleShape
-                ) {
-                    Icon(Icons.Default.Add, "")
-                }
-            }
-        }
+        bottomBar = bottomBar
     ) { innerPadding ->
         LazyColumn(Modifier.padding(innerPadding)) {
             items(items = events.value, key = { it.id }) {
