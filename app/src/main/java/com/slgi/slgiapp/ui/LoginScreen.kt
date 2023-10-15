@@ -16,6 +16,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Visibility
 import androidx.compose.material.icons.outlined.VisibilityOff
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -26,7 +27,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -37,6 +40,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalFocusManager
@@ -208,9 +212,20 @@ fun LoginScreen(
                 ) { Text(text = stringResource(id = R.string.login)) }
             }
             Spacer(modifier = Modifier.height(10.dp))
+            // Dialog for user that wish to reset their password
+            val showDialog = remember { mutableStateOf(false) }
+            if (showDialog.value) {
+                ResetPasswordAlert(
+                    viewModel = viewModel,
+                    showDialog = showDialog,
+                    scope = scope,
+                    snackBarHostState = snackbarHostState,
+                )
+            }
+
             ClickableText(
                 text = AnnotatedString(stringResource(id = R.string.forgotpswd)),
-                onClick = forgotPasswordAction,
+                onClick = { showDialog.value = true },
                 style = TextStyle(
                     color = MaterialTheme.colorScheme.primary,
                     textDecoration = TextDecoration.Underline
@@ -220,6 +235,62 @@ fun LoginScreen(
     }
 }
 
+@Composable
+private fun ResetPasswordAlert(
+    viewModel: LoginScreenViewModel,
+    showDialog: MutableState<Boolean>,
+    scope: CoroutineScope,
+    snackBarHostState: SnackbarHostState,
+    focusManager: FocusManager = LocalFocusManager.current,
+) {
+    val state = viewModel.uiState.collectAsState()
+    focusManager.clearFocus()
+
+    AlertDialog(
+        onDismissRequest = { showDialog.value = false },
+        confirmButton = {
+            TextButton(onClick = {
+                CoroutineScope(Dispatchers.IO).launch {
+                    try {
+                        viewModel.resetPassword(state.value.email)
+                        showDialog.value = false
+                    } catch (e: Exception) {
+                        scope.launch {
+                            e.message?.let {
+                                snackBarHostState.showSnackbar(
+                                    message = it
+                                )
+                            }
+                        }
+                    }
+                }
+            }) {
+                Text(text = stringResource(id = R.string.reset))
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = { showDialog.value = false }) {
+                Text(text = stringResource(id = R.string.cancel))
+            }
+        },
+        title = { Text(text = stringResource(id = R.string.resetPassword)) },
+        text = {
+            OutlinedTextField(
+                label = { Text(text = stringResource(id = R.string.emailLabel)) },
+                value = state.value.email,
+                singleLine = true,
+                onValueChange = { viewModel.onEmailChange(it) },
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Email,
+                    imeAction = ImeAction.Next
+                ),
+                keyboardActions = KeyboardActions(
+                    onNext = { focusManager.moveFocus(FocusDirection.Down) }
+                )
+            )
+        }
+    )
+}
 
 @Preview
 @Composable
