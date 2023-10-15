@@ -10,10 +10,14 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
@@ -31,8 +35,16 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun RegistrationScreen(viewModel: RegistrationScreenViewModel, onRequest: () -> Unit) {
+    val scope = rememberCoroutineScope()
+    val snackbarHostState = remember { SnackbarHostState() }
+
     Scaffold(
-        topBar = { TopBar(barTitle = stringResource(id = R.string.requestAccessLabel)) }
+        topBar = { TopBar(barTitle = stringResource(id = R.string.requestAccessLabel)) },
+        snackbarHost = {
+            SnackbarHost(
+                hostState = snackbarHostState
+            )
+        }
     ) { innerPadding ->
         val uiState = viewModel.uiState.collectAsState()
         val focusManager = LocalFocusManager.current
@@ -111,12 +123,15 @@ fun RegistrationScreen(viewModel: RegistrationScreenViewModel, onRequest: () -> 
                 Text(text = stringResource(id = R.string.acceptsTerms))
             }
             Button(
-                // TODO Improve screen change handling
                 onClick = {
-                    CoroutineScope(Dispatchers.IO).launch {
-                        viewModel.requestAccess()
+                    CoroutineScope(Dispatchers.Main).launch {
+                        try {
+                            viewModel.requestAccess()
+                            onRequest()
+                        } catch (e: Exception) {
+                            scope.launch { e.message?.let { snackbarHostState.showSnackbar(message = it) } }
+                        }
                     }
-                    onRequest()
                 }) {
                 Text(text = stringResource(id = R.string.requestAccessLabel))
             }

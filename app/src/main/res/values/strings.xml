@@ -30,6 +30,7 @@
     <string name="create">Opret</string>
     <string name="cancel">Afbryd</string>
     <string name="noNewRequests">Der er ingen ventende andmodninger</string>
+    <string name="failedRequest">Din anmodning fejlede. Prøv igen!</string>
 
     <string name="logout">Log Af</string>
 </resources>
