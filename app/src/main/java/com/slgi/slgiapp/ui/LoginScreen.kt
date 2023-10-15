@@ -22,11 +22,16 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -64,100 +69,73 @@ fun LoginScreen(
     val uiState = viewModel.uiState.collectAsState()
     val focusManager = LocalFocusManager.current
 
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Spacer(modifier = Modifier.height(50.dp))
-        Text(
-            text = stringResource(id = R.string.organization_name),
-            color = MaterialTheme.colorScheme.onSurface,
-            fontWeight = FontWeight.Bold,
-            style = MaterialTheme.typography.headlineLarge
-        )
-        Spacer(modifier = Modifier.height(15.dp))
+    val scope = rememberCoroutineScope()
+    val snackbarHostState = remember { SnackbarHostState() }
 
-        Image(
-            ImageBitmap.imageResource(id = R.drawable.pexels_maur_cio_mascaro_1592109),
-            modifier = Modifier
-                .height(200.dp),
-            contentScale = ContentScale.Crop,
-            contentDescription = null
-        )
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-        var passwordVisible by rememberSaveable { mutableStateOf(false) }
-
-        OutlinedTextField(
-            label = { Text(text = stringResource(id = R.string.emailLabel)) },
-            value = uiState.value.email,
-            onValueChange = { viewModel.onEmailChange(it) },
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Email,
-                imeAction = ImeAction.Next
-            ),
-            keyboardActions = KeyboardActions(
-                onNext = { focusManager.moveFocus(FocusDirection.Down) }
+    Scaffold(
+        snackbarHost = {
+            SnackbarHost(
+                hostState = snackbarHostState
             )
-        )
+        }
+    ) { innerPadding ->
+        Column(
+            modifier = Modifier.padding(innerPadding),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Spacer(modifier = Modifier.height(50.dp))
+            Text(
+                text = stringResource(id = R.string.organization_name),
+                color = MaterialTheme.colorScheme.onSurface,
+                fontWeight = FontWeight.Bold,
+                style = MaterialTheme.typography.headlineLarge
+            )
+            Spacer(modifier = Modifier.height(15.dp))
 
-        Spacer(modifier = Modifier.height(10.dp))
-        OutlinedTextField(
-            label = { Text(text = stringResource(id = R.string.passwordLable)) },
-            value = uiState.value.password,
-            visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Password,
-                imeAction = ImeAction.Done
-            ),
-            onValueChange = { viewModel.onPasswordChange(it) },
-            trailingIcon = {
-                val image = if (passwordVisible)
-                    Icons.Outlined.Visibility
-                else Icons.Outlined.VisibilityOff
-                IconButton(onClick = { passwordVisible = !passwordVisible }) {
-                    Icon(imageVector = image, contentDescription = null)
-                }
-            },
-            keyboardActions = KeyboardActions(onDone = {
-                CoroutineScope(Dispatchers.Main).launch {
-                    try {
-                        viewModel.login()
-                        loginAction()
-                    } catch (e: Exception) {
-                        // TODO Implement logic for failed login
-                    }
-                }
-            })
-        )
-
-        Spacer(modifier = Modifier.height(20.dp))
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(80.dp, 0.dp)
-        )
-        {
-            Button(
-                enabled = true,
-                onClick = requestAction,
-                border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary),
-                colors = ButtonDefaults.buttonColors(
-                    MaterialTheme.colorScheme.surface
-                ),
+            Image(
+                ImageBitmap.imageResource(id = R.drawable.pexels_maur_cio_mascaro_1592109),
                 modifier = Modifier
-                    .width(100.dp)
-                    .height(40.dp)
-            ) {
-                Text(
-                    text = stringResource(id = R.string.requestButton),
-                    color = MaterialTheme.colorScheme.primary
+                    .height(200.dp),
+                contentScale = ContentScale.Crop,
+                contentDescription = null
+            )
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            var passwordVisible by rememberSaveable { mutableStateOf(false) }
+
+            OutlinedTextField(
+                label = { Text(text = stringResource(id = R.string.emailLabel)) },
+                value = uiState.value.email,
+                onValueChange = { viewModel.onEmailChange(it) },
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Email,
+                    imeAction = ImeAction.Next
+                ),
+                keyboardActions = KeyboardActions(
+                    onNext = { focusManager.moveFocus(FocusDirection.Down) }
                 )
-            }
-            Button(
-                onClick = {
-                    // Block the main thread until login
+            )
+
+            Spacer(modifier = Modifier.height(10.dp))
+            OutlinedTextField(
+                label = { Text(text = stringResource(id = R.string.passwordLable)) },
+                value = uiState.value.password,
+                visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Password,
+                    imeAction = ImeAction.Done
+                ),
+                onValueChange = { viewModel.onPasswordChange(it) },
+                trailingIcon = {
+                    val image = if (passwordVisible)
+                        Icons.Outlined.Visibility
+                    else Icons.Outlined.VisibilityOff
+                    IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                        Icon(imageVector = image, contentDescription = null)
+                    }
+                },
+                keyboardActions = KeyboardActions(onDone = {
                     CoroutineScope(Dispatchers.Main).launch {
                         try {
                             viewModel.login()
@@ -166,26 +144,71 @@ fun LoginScreen(
                             // TODO Implement logic for failed login
                         }
                     }
-
-
-                },
-                colors = ButtonDefaults.buttonColors(
-                    MaterialTheme.colorScheme.primary
-                ),
-                modifier = Modifier
-                    .width(100.dp)
-                    .height(40.dp)
-            ) { Text(text = stringResource(id = R.string.login)) }
-        }
-        Spacer(modifier = Modifier.height(10.dp))
-        ClickableText(
-            text = AnnotatedString(stringResource(id = R.string.forgotpswd)),
-            onClick = forgotPasswordAction,
-            style = TextStyle(
-                color = MaterialTheme.colorScheme.primary,
-                textDecoration = TextDecoration.Underline
+                })
             )
-        )
+
+            Spacer(modifier = Modifier.height(20.dp))
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(80.dp, 0.dp)
+            )
+            {
+                Button(
+                    enabled = true,
+                    onClick = requestAction,
+                    border = BorderStroke(2.dp, MaterialTheme.colorScheme.primary),
+                    colors = ButtonDefaults.buttonColors(
+                        MaterialTheme.colorScheme.surface
+                    ),
+                    modifier = Modifier
+                        .width(100.dp)
+                        .height(40.dp)
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.requestButton),
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                }
+                Button(
+                    onClick = {
+                        // Block the main thread until login
+                        CoroutineScope(Dispatchers.Main).launch {
+                            try {
+                                viewModel.login()
+                                loginAction()
+                            } catch (e: Exception) {
+                                scope.launch {
+                                    e.message?.let {
+                                        snackbarHostState.showSnackbar(
+                                            message = it
+                                        )
+                                    }
+                                }
+                            }
+                        }
+
+
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        MaterialTheme.colorScheme.primary
+                    ),
+                    modifier = Modifier
+                        .width(100.dp)
+                        .height(40.dp)
+                ) { Text(text = stringResource(id = R.string.login)) }
+            }
+            Spacer(modifier = Modifier.height(10.dp))
+            ClickableText(
+                text = AnnotatedString(stringResource(id = R.string.forgotpswd)),
+                onClick = forgotPasswordAction,
+                style = TextStyle(
+                    color = MaterialTheme.colorScheme.primary,
+                    textDecoration = TextDecoration.Underline
+                )
+            )
+        }
     }
 }
 
