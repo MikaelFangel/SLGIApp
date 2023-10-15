@@ -47,7 +47,7 @@ fun RegistrationScreen(viewModel: RegistrationScreenViewModel, onRequest: () -> 
                 label = { Text(text = stringResource(id = R.string.firstNameLabel)) },
                 singleLine = true,
                 value = uiState.value.firstname,
-                onValueChange = { viewModel.onFirstNameChange(it) },
+                onValueChange = { viewModel.onFirstNameChange(it.filter { c -> nameFilter(c) }) },
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Next
                 ),
@@ -58,7 +58,8 @@ fun RegistrationScreen(viewModel: RegistrationScreenViewModel, onRequest: () -> 
             OutlinedTextField(
                 label = { Text(text = stringResource(id = R.string.lastNameLabel)) },
                 singleLine = true,
-                value = uiState.value.lastname, onValueChange = { viewModel.onLastNameChange(it) },
+                value = uiState.value.lastname,
+                onValueChange = { viewModel.onLastNameChange(it.filter { c -> nameFilter(c) }) },
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Next
                 ),
@@ -122,3 +123,5 @@ fun RegistrationScreen(viewModel: RegistrationScreenViewModel, onRequest: () -> 
         }
     }
 }
+
+fun nameFilter(c: Char) = c.isLetter() || c == ' ' || c == '-'
