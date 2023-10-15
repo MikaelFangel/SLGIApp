@@ -86,7 +86,9 @@ class RegistrationScreenViewModel(private val requestRepository: RequestDataSour
         if(uiState.value.email.matches(emailRegex.toRegex()).not())
             return false
         // Check the passwords match
-        if (uiState.value.password != uiState.value.passwordRep || uiState.value.password.isEmpty())
+        if (uiState.value.password != uiState.value.passwordRep
+            || uiState.value.password.isEmpty()
+            || uiState.value.password.length < 8)
             return false
         // Check that the user has accepted terms and cons
         if (uiState.value.terms.not())
