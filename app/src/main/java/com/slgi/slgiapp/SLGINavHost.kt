@@ -2,6 +2,7 @@ package com.slgi.slgiapp
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Logout
+import androidx.compose.material.icons.outlined.DeleteForever
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
@@ -131,6 +132,12 @@ fun SLGINavHost(
                 },
                 // The map contains the prefix icon, the description, and the action to be performed onclick
                 navigationMap = mapOf(
+                    R.string.deleteUser to Pair(Icons.Outlined.DeleteForever) {
+                        loginScreenViewModel.deleteUser()
+                        navController.navigate(Screens.LOGIN_SCREEN.name) {
+                            popUpTo(0)
+                        }
+                    },
                     R.string.logout to Pair(Icons.AutoMirrored.Outlined.Logout) {
                         loginScreenViewModel.logout()
                         navController.navigate(Screens.LOGIN_SCREEN.name) {
