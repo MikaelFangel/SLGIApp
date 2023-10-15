@@ -1,7 +1,12 @@
 package com.slgi.slgiapp
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Logout
 import androidx.compose.material.icons.outlined.DeleteForever
@@ -17,7 +22,9 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -196,20 +203,27 @@ fun SLGINavHost(
 fun safetyDialog(show: MutableState<Boolean>, onConfirm: () -> Unit) {
     AlertDialog(onDismissRequest = { show.value = false }) {
         ElevatedCard {
-            Row(horizontalArrangement = Arrangement.End) {
-                Button(onClick = { show.value = false }) {
-                    Text(text = stringResource(id = R.string.cancel))
-                }
-                Button(
-                    onClick = { onConfirm() },
-                    colors = ButtonColors(
-                        containerColor = MaterialTheme.colorScheme.tertiaryContainer,
-                        contentColor = MaterialTheme.colorScheme.onTertiary,
-                        disabledContainerColor = MaterialTheme.colorScheme.tertiaryContainer,
-                        disabledContentColor = MaterialTheme.colorScheme.onTertiary
-                    )
+            Column(modifier = Modifier.padding(10.dp)) {
+                Text(text = stringResource(id = R.string.areYouSure))
+                Spacer(modifier = Modifier.size(10.dp))
+                Row(
+                    horizontalArrangement = Arrangement.End,
+                    modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(text = stringResource(id = R.string.approve))
+                    Button(onClick = { show.value = false }) {
+                        Text(text = stringResource(id = R.string.cancel))
+                    }
+                    Button(
+                        onClick = { onConfirm() },
+                        colors = ButtonColors(
+                            containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                            contentColor = MaterialTheme.colorScheme.onTertiary,
+                            disabledContainerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                            disabledContentColor = MaterialTheme.colorScheme.onTertiary
+                        )
+                    ) {
+                        Text(text = stringResource(id = R.string.approve))
+                    }
                 }
             }
         }
