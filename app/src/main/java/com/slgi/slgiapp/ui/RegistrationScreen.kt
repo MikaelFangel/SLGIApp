@@ -36,12 +36,18 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @Composable
-fun RegistrationScreen(viewModel: RegistrationScreenViewModel, onRequest: () -> Unit) {
+fun RegistrationScreen(
+    viewModel: RegistrationScreenViewModel,
+    onRequest: () -> Unit,
+    goBackAction: () -> Unit
+) {
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
 
     Scaffold(
-        topBar = { TopBar(barTitle = stringResource(id = R.string.requestAccessLabel)) },
+        topBar = { TopBar(
+            barTitle = stringResource(id = R.string.requestAccessLabel),
+            goBackAction = goBackAction) },
         snackbarHost = {
             SnackbarHost(
                 hostState = snackbarHostState
