@@ -22,4 +22,8 @@ class LoginNetworkDataSource : LoginApi {
     override suspend fun resetPassword(email: String) {
         FirebaseAuth.getInstance().sendPasswordResetEmail(email)
     }
+
+    override fun addUser(email: String, password: String) {
+        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email,password)
+    }
 }
