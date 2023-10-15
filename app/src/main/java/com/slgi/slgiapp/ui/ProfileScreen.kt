@@ -50,7 +50,7 @@ fun ProfileScreen(
                 .padding(innerPadding),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            item { Profile(name = "Name Here") }
+            item { Profile(name = "") }
             items(navigationMap.keys.toList()) { entry ->
                 ListItem(
                     leadingContent = {
