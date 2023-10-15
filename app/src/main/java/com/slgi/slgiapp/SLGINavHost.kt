@@ -18,6 +18,7 @@ import com.slgi.slgiapp.data.RequestDataSource
 import com.slgi.slgiapp.data.RequestRepository
 import com.slgi.slgiapp.ui.LoginScreen
 import com.slgi.slgiapp.ui.LoginScreenViewModel
+import com.slgi.slgiapp.ui.MyEventsScreen
 import com.slgi.slgiapp.ui.ProfileScreen
 import com.slgi.slgiapp.ui.RegistrationScreen
 import com.slgi.slgiapp.ui.RegistrationScreenViewModel
@@ -66,7 +67,7 @@ fun SLGINavHost(
                 loginScreenViewModel = loginScreenViewModel,
                 bottomBar = {
                     SLGINavBar(
-                        onNavigateToMyEvents = { /*TODO*/ },
+                        onNavigateToMyEvents = { navController.navigate(Screens.MYEVENTS_SCREEN.name) },
                         onNavigateToUpcomingEvents = { /* Left blank intentionally */ },
                         onNavigateToProfile = { navController.navigate(Screens.PROFILE_SCREEN.name) },
                         onNavigateToUserRequests = { navController.navigate(Screens.REQUEST_SCREEN.name) },
@@ -108,7 +109,7 @@ fun SLGINavHost(
                 viewModel = userRequestsViewModel,
                 bottomBar = {
                     SLGINavBar(
-                        onNavigateToMyEvents = { /*TODO*/ },
+                        onNavigateToMyEvents = { navController.navigate(Screens.MYEVENTS_SCREEN.name) },
                         onNavigateToUpcomingEvents = { navController.navigate(Screens.UPCOMING_SCREEN.name) },
                         onNavigateToProfile = { navController.navigate(Screens.PROFILE_SCREEN.name) },
                         onNavigateToUserRequests = { /* Left blank intentionally */ },
@@ -122,7 +123,7 @@ fun SLGINavHost(
             ProfileScreen(
                 bottomBar = {
                     SLGINavBar(
-                        onNavigateToMyEvents = { /*TODO*/ },
+                        onNavigateToMyEvents = { navController.navigate(Screens.MYEVENTS_SCREEN.name) },
                         onNavigateToUpcomingEvents = { navController.navigate(Screens.UPCOMING_SCREEN.name) },
                         onNavigateToProfile = { /* Left blank intentionally */ },
                         onNavigateToUserRequests = { navController.navigate(Screens.REQUEST_SCREEN.name) },
@@ -146,6 +147,21 @@ fun SLGINavHost(
                     }
                 ),
                 goBackAction = { navController.popBackStack() }
+            )
+        }
+        composable(Screens.MYEVENTS_SCREEN.name){
+            MyEventsScreen(
+                viewModel = upcomingEventsScreenViewModel,
+                bottomBar = {
+                    SLGINavBar(
+                        onNavigateToMyEvents = { /* Left blank intentionally */ },
+                        onNavigateToUpcomingEvents = { navController.navigate(Screens.UPCOMING_SCREEN.name) },
+                        onNavigateToProfile = { navController.navigate(Screens.PROFILE_SCREEN.name) },
+                        onNavigateToUserRequests = { navController.navigate(Screens.REQUEST_SCREEN.name) },
+                        admin = loginState.value.isAdmin,
+                        page = Screens.MYEVENTS_SCREEN.ordinal
+                    )
+                },
             )
         }
     }
