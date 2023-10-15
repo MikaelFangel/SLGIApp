@@ -18,9 +18,13 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -36,8 +40,17 @@ fun UserRequestsScreen(
     bottomBar: @Composable () -> Unit,
 ) {
     val requests = viewModel.requests.collectAsState(initial = emptyList())
+
+    val scope = rememberCoroutineScope()
+    val snackbarHostState = remember { SnackbarHostState() }
+
     Scaffold(
-        bottomBar = bottomBar
+        bottomBar = bottomBar,
+        snackbarHost = {
+            SnackbarHost(
+                hostState = snackbarHostState
+            )
+        }
     ) { innerPadding ->
         if (requests.value.isNotEmpty()) {
             LazyColumn(modifier = Modifier.padding(innerPadding)) {
@@ -58,7 +71,13 @@ fun UserRequestsScreen(
                                         try {
                                             viewModel.deleteUserRequest(it)
                                         } catch (e: Exception) {
-                                            // TODO Implement logic for failed approval
+                                            scope.launch {
+                                                e.message?.let {
+                                                    snackbarHostState.showSnackbar(
+                                                        message = it
+                                                    )
+                                                }
+                                            }
                                         }
                                     }
                                 }) {
@@ -72,7 +91,13 @@ fun UserRequestsScreen(
                                         try {
                                             viewModel.approveUser(it)
                                         } catch (e: Exception) {
-                                            // TODO Implement logic for failed approval
+                                            scope.launch {
+                                                e.message?.let {
+                                                    snackbarHostState.showSnackbar(
+                                                        message = it
+                                                    )
+                                                }
+                                            }
                                         }
                                     }
                                 }) {
@@ -87,7 +112,7 @@ fun UserRequestsScreen(
                 }
             }
         } else {
-            Box (
+            Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
