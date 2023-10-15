@@ -54,7 +54,7 @@ fun UserRequestsScreen(
                         trailingContent = {
                             Row {
                                 IconButton(onClick = {
-                                    CoroutineScope(Dispatchers.Main).launch {
+                                    CoroutineScope(Dispatchers.IO).launch {
                                         try {
                                             viewModel.deleteUserRequest(it)
                                         } catch (e: Exception) {
@@ -68,7 +68,7 @@ fun UserRequestsScreen(
                                     )
                                 }
                                 IconButton(onClick = {
-                                    CoroutineScope(Dispatchers.Main).launch {
+                                    CoroutineScope(Dispatchers.IO).launch {
                                         try {
                                             viewModel.approveUser(it)
                                         } catch (e: Exception) {
