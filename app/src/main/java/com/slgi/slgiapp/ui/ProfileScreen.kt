@@ -41,7 +41,7 @@ fun ProfileScreen(
     Scaffold(
         topBar = {
             TopBar(
-                barTitle = "Settings",
+                barTitle = stringResource(R.string.Settings),
                 goBackAction = goBackAction
             )
         },

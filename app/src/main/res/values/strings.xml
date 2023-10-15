@@ -35,6 +35,7 @@
     <string name="resetPassword">Nulstil mit kodeord</string>
     <string name="deleteUser">Slet bruger</string>
     <string name="approve">Godkend</string>
+    <string name="Settings">Indstillinger</string>
 
     <string name="logout">Log Af</string>
 </resources>
