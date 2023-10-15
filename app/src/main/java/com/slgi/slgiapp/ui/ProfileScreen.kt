@@ -40,9 +40,10 @@ fun ProfileScreen(
 ) {
     Scaffold(
         topBar = {
-                 TopBar(
-                     barTitle = "Settings",
-                     goBackAction = goBackAction)
+            TopBar(
+                barTitle = "Settings",
+                goBackAction = goBackAction
+            )
         },
         bottomBar = bottomBar
     )
@@ -97,8 +98,8 @@ fun ProfileScreenPreview() {
             ProfileScreen(
                 {},
                 mapOf(
-                R.string.logout to Pair(Icons.AutoMirrored.Outlined.Logout) {}
-            ), {})
+                    R.string.logout to Pair(Icons.AutoMirrored.Outlined.Logout) {}
+                ), {})
         }
     }
 }
