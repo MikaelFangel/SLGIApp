@@ -107,6 +107,7 @@ fun LoginScreen(
             OutlinedTextField(
                 label = { Text(text = stringResource(id = R.string.emailLabel)) },
                 value = uiState.value.email,
+                singleLine = true,
                 onValueChange = { viewModel.onEmailChange(it) },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Email,
@@ -120,6 +121,7 @@ fun LoginScreen(
             Spacer(modifier = Modifier.height(10.dp))
             OutlinedTextField(
                 label = { Text(text = stringResource(id = R.string.passwordLable)) },
+                singleLine = true,
                 value = uiState.value.password,
                 visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(

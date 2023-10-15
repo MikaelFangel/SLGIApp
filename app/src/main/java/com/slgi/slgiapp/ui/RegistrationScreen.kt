@@ -45,6 +45,7 @@ fun RegistrationScreen(viewModel: RegistrationScreenViewModel, onRequest: () -> 
         ) {
             OutlinedTextField(
                 label = { Text(text = stringResource(id = R.string.firstNameLabel)) },
+                singleLine = true,
                 value = uiState.value.firstname,
                 onValueChange = { viewModel.onFirstNameChange(it) },
                 keyboardOptions = KeyboardOptions(
@@ -56,6 +57,7 @@ fun RegistrationScreen(viewModel: RegistrationScreenViewModel, onRequest: () -> 
             )
             OutlinedTextField(
                 label = { Text(text = stringResource(id = R.string.lastNameLabel)) },
+                singleLine = true,
                 value = uiState.value.lastname, onValueChange = { viewModel.onLastNameChange(it) },
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Next
@@ -66,6 +68,7 @@ fun RegistrationScreen(viewModel: RegistrationScreenViewModel, onRequest: () -> 
             )
             OutlinedTextField(
                 label = { Text(text = stringResource(id = R.string.emailLabel)) },
+                singleLine = true,
                 value = uiState.value.email, onValueChange = { viewModel.onEmailChange(it) },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Email,
@@ -77,6 +80,7 @@ fun RegistrationScreen(viewModel: RegistrationScreenViewModel, onRequest: () -> 
             )
             OutlinedTextField(
                 label = { Text(text = stringResource(id = R.string.passwordLable)) },
+                singleLine = true,
                 value = uiState.value.password, onValueChange = { viewModel.onPasswordChange(it) },
                 visualTransformation = PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(
@@ -89,6 +93,7 @@ fun RegistrationScreen(viewModel: RegistrationScreenViewModel, onRequest: () -> 
             )
             OutlinedTextField(
                 label = { Text(text = stringResource(id = R.string.repeatPasswordLabel)) },
+                singleLine = true,
                 value = uiState.value.passwordRep,
                 visualTransformation = PasswordVisualTransformation(),
                 onValueChange = { viewModel.onPasswordRepChange(it) },
