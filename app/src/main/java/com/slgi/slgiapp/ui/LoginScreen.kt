@@ -58,6 +58,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.slgi.slgiapp.R
 import com.slgi.slgiapp.data.LoginNetworkDataSource
 import com.slgi.slgiapp.data.LoginRepository
@@ -72,7 +73,7 @@ fun LoginScreen(
     requestAction: () -> Unit,
     forgotPasswordAction: (Int) -> Unit
 ) {
-    val uiState = viewModel.uiState.collectAsState()
+    val uiState = viewModel.uiState.collectAsStateWithLifecycle()
     val focusManager = LocalFocusManager.current
 
     val scope = rememberCoroutineScope()
