@@ -12,7 +12,7 @@
     <string name="firstNameLabel">Fornavn</string>
     <string name="lastNameLabel">Efternavn</string>
     <string name="repeatPasswordLabel">Password igen</string>
-    <string name="acceptsTerms">Jeg acceptere betignelserne.</string>
+    <string name="acceptsTerms">Jeg acceptere betingelserne.</string>
     <string name="requestButton">Anmod</string>
     <string name="requestAccessLabel">Anmod om adgang</string>
     <string name="login">Login</string>
