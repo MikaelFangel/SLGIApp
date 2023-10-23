@@ -37,6 +37,7 @@
     <string name="approve">Godkend</string>
     <string name="Settings">Indstillinger</string>
     <string name="areYouSure">Er du sikker på at du ønsker at gennemføre handlingen? Denne handling kan ikke fortrydes når gennemført</string>
-
+    <string name="ok">OK</string>
     <string name="logout">Log Af</string>
+    <string name="confirm">Bekræft</string>
 </resources>

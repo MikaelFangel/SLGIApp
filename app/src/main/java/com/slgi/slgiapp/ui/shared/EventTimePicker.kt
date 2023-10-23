@@ -19,8 +19,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
+import com.slgi.slgiapp.R
 import com.slgi.slgiapp.ui.UpcomingEventsScreenViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -87,7 +89,7 @@ fun SelectTimeDialog(viewModel: UpcomingEventsScreenViewModel) {
                 TextButton(onClick = {
                     viewModel.dismissTimeDialog()
                 }) {
-                    Text(text = "Dismiss")
+                    Text(text = stringResource(id = R.string.cancel))
                 }
 
                 // confirm button
@@ -97,7 +99,7 @@ fun SelectTimeDialog(viewModel: UpcomingEventsScreenViewModel) {
                         viewModel.dismissTimeDialog()
                     }
                 ) {
-                    Text(text = "Confirm")
+                    Text(text = stringResource(id = R.string.confirm))
                 }
             }
         }
