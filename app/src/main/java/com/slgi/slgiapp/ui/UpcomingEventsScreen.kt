@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.slgi.slgiapp.R
 import com.slgi.slgiapp.ui.shared.CreateEventModal
 import com.slgi.slgiapp.ui.shared.EventCard
@@ -29,9 +30,9 @@ fun UpcomingEventsScreen(
     loginScreenViewModel: LoginScreenViewModel,
     bottomBar: @Composable () -> Unit,
 ) {
-    val events = viewModel.events.collectAsState(initial = emptyList())
-    val uiState = viewModel.uiState.collectAsState()
-    val loginState = loginScreenViewModel.uiState.collectAsState()
+    val events = viewModel.events.collectAsStateWithLifecycle(initialValue = emptyList())
+    val uiState = viewModel.uiState.collectAsStateWithLifecycle()
+    val loginState = loginScreenViewModel.uiState.collectAsStateWithLifecycle()
 
     Scaffold(
         bottomBar = bottomBar,

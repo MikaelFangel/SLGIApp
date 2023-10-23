@@ -7,6 +7,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import com.slgi.slgiapp.R
 import com.slgi.slgiapp.ui.UpcomingEventsScreenViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -27,7 +29,7 @@ fun SelectDateDialog(viewModel: UpcomingEventsScreenViewModel){
                 },
                 enabled = datePickerState.selectedDateMillis != null
             ) {
-                Text("OK")
+                Text(text = stringResource(id = R.string.confirm))
             }
         },
         dismissButton = {
@@ -36,7 +38,7 @@ fun SelectDateDialog(viewModel: UpcomingEventsScreenViewModel){
                     viewModel.dismissDateDialog()
                 }
             ) {
-                Text("Cancel")
+                Text(text = stringResource(id = R.string.cancel))
             }
         }
     ) {
