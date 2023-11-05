@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.DeleteForever
 import androidx.compose.material.icons.outlined.Groups
 import androidx.compose.material.icons.outlined.Image
 import androidx.compose.material.icons.outlined.InsertInvitation
@@ -23,6 +24,8 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonColors
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -48,6 +51,8 @@ fun EventCard(
     eventFireleader: String,
     buttonText: String,
     participating: Boolean,
+    isAdmin: Boolean,
+    onDeleteAction: () -> Unit,
     buttonOnClickAction: () -> Unit
 ) {
     ElevatedCard(
@@ -58,7 +63,7 @@ fun EventCard(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(140.dp)
+                .height(140.dp),
         ) {
             if (eventImageURL != null) {
                 AsyncImage(
@@ -80,6 +85,28 @@ fun EventCard(
                         contentDescription = null,
                         tint = MaterialTheme.colorScheme.inverseOnSurface
                     )
+                }
+            }
+            Box(
+                Modifier.fillMaxWidth(),
+                contentAlignment = Alignment.TopEnd
+            ) {
+                if (isAdmin) {
+                    IconButton(
+                        onClick = onDeleteAction,
+                        colors = IconButtonColors(
+                            containerColor = MaterialTheme.colorScheme.errorContainer,
+                            contentColor = MaterialTheme.colorScheme.onErrorContainer,
+                            disabledContentColor = MaterialTheme.colorScheme.tertiaryContainer,
+                            disabledContainerColor = MaterialTheme.colorScheme.onTertiaryContainer
+                        )
+                    ) {
+                        Icon(
+                            Icons.Outlined.DeleteForever,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.onErrorContainer
+                        )
+                    }
                 }
             }
         }
@@ -190,7 +217,9 @@ fun EventCardPreview() {
                 eventNumberOfParticipants = "10",
                 eventFireleader = "A. Andersen",
                 buttonText = "Button Text",
-                participating = true
+                participating = true,
+                isAdmin = true,
+                onDeleteAction = {},
             ) {
             }
         }

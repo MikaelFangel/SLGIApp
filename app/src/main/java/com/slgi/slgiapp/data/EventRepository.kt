@@ -10,8 +10,12 @@ class EventRepository(
 
     suspend fun toggleParticipation(id: String) = eventNetworkDataSource.toggleParticipation(id)
     fun getParticipantFlow(eventId: String) = eventNetworkDataSource.getParticipantFlow(eventId)
-    fun getParticipants(eventId: String)  = eventNetworkDataSource.getParticipants(eventId)
-    fun createEvent(event: Event){
+    fun getParticipants(eventId: String) = eventNetworkDataSource.getParticipants(eventId)
+    fun createEvent(event: Event) {
         eventNetworkDataSource.createEvent(event)
+    }
+
+    fun deleteEvent(eventId: String) {
+        eventNetworkDataSource.deleteEvent(eventId)
     }
 }

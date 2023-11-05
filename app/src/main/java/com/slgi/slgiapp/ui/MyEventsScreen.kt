@@ -51,7 +51,9 @@ fun MyEventsScreen(
                         eventNumberOfParticipants = participants.value.size.toString(),
                         eventFireleader = it.fireleader,
                         buttonText = stringResource(R.string.resign),
-                        participating = (userParticipation != null && userParticipation.value.isEmpty())
+                        participating = (userParticipation != null && userParticipation.value.isEmpty()),
+                        isAdmin = false,
+                        onDeleteAction = {}
                     ) {
                         CoroutineScope(Dispatchers.IO).launch {
                             viewModel.toggleParticipation(it.id)
