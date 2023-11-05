@@ -27,8 +27,8 @@ class UpcomingEventsScreenViewModel(
     fun createEvent() {
         val eventState = uiState.value
         val addedTime: Instant = Instant.ofEpochSecond(eventState.newEventDate.seconds)
-                                .plus(eventState.newEventHours!!.toLong(), ChronoUnit.HOURS)
-                                .plus(eventState.newEventMinutes!!.toLong(), ChronoUnit.MINUTES)
+            .plus(eventState.newEventHours!!.toLong(), ChronoUnit.HOURS)
+            .plus(eventState.newEventMinutes!!.toLong(), ChronoUnit.MINUTES)
         val newtimestamp = Timestamp(addedTime.epochSecond, 0)
         eventRepository.createEvent(
             Event(
@@ -41,35 +41,43 @@ class UpcomingEventsScreenViewModel(
         )
     }
 
-    fun showCreateDialog(){
+    fun deleteEvent(eventId: String) {
+        eventRepository.deleteEvent(eventId)
+    }
+
+    fun showCreateDialog() {
         _uiState.update { currentState ->
             currentState.copy(
                 displayCreateDialog = true
             )
         }
     }
-    fun showDateDialog(){
+
+    fun showDateDialog() {
         _uiState.update { currentState ->
             currentState.copy(
                 displayDateDialog = true
             )
         }
     }
-    fun onEventNameChange(name: String){
+
+    fun onEventNameChange(name: String) {
         _uiState.update { currentState ->
             currentState.copy(
                 newEventName = name
             )
         }
     }
-    fun onEventDescChange(desc: String){
+
+    fun onEventDescChange(desc: String) {
         _uiState.update { currentState ->
             currentState.copy(
                 newEventDescription = desc
             )
         }
     }
-    fun onEventImgUrlChange(url: String){
+
+    fun onEventImgUrlChange(url: String) {
         _uiState.update { currentState ->
             currentState.copy(
                 newEventImageURL = url
@@ -77,7 +85,7 @@ class UpcomingEventsScreenViewModel(
         }
     }
 
-    fun onFireLeaderChange(fireleader: String){
+    fun onFireLeaderChange(fireleader: String) {
         _uiState.update { currentState ->
             currentState.copy(
                 newEventFireLeader = fireleader
@@ -85,7 +93,7 @@ class UpcomingEventsScreenViewModel(
         }
     }
 
-    fun dismissCreateDialog(){
+    fun dismissCreateDialog() {
         _uiState.update { currentState ->
             currentState.copy(
                 displayCreateDialog = false,
@@ -101,28 +109,32 @@ class UpcomingEventsScreenViewModel(
             )
         }
     }
-    fun dismissDateDialog(){
+
+    fun dismissDateDialog() {
         _uiState.update { currentState ->
             currentState.copy(
                 displayDateDialog = false
             )
         }
     }
-    fun dismissTimeDialog(){
+
+    fun dismissTimeDialog() {
         _uiState.update { currentState ->
             currentState.copy(
                 displayTimeDialog = false
             )
         }
     }
-    fun setNewEventDate(time: Long){
+
+    fun setNewEventDate(time: Long) {
         _uiState.update { currentState ->
             currentState.copy(
                 newEventDate = Timestamp(Date(time))
             )
         }
     }
-    fun showTimeDialog(){
+
+    fun showTimeDialog() {
         _uiState.update { currentState ->
             currentState.copy(
                 displayTimeDialog = true
@@ -138,7 +150,7 @@ class UpcomingEventsScreenViewModel(
             )
         }
     }
-    
+
     private fun getRandomImageUrl(): String {
         val urls = listOf(
             "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1964&q=80",

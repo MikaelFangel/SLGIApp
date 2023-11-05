@@ -9,4 +9,5 @@ interface EventDateSourceApi {
     fun getParticipantFlow(eventId: String): Flow<List<User>>?
     fun getParticipants(eventId: String): Flow<List<User>>
     fun createEvent(event: Event)
+    fun deleteEvent(eventId: String)
 }

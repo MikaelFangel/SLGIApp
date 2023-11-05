@@ -70,7 +70,9 @@ fun UpcomingEventsScreen(
                     eventFireleader = it.fireleader,
                     buttonText = if (userParticipation != null && userParticipation.value.isEmpty())
                         stringResource(R.string.participate) else stringResource(R.string.resign),
-                    participating = (userParticipation != null && userParticipation.value.isEmpty())
+                    participating = (userParticipation != null && userParticipation.value.isEmpty()),
+                    isAdmin = loginState.value.isAdmin,
+                    onDeleteAction = { viewModel.deleteEvent(it.id) }
                 ) {
                     CoroutineScope(Dispatchers.IO).launch {
                         viewModel.toggleParticipation(it.id)
