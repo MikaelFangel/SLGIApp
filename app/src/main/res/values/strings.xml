@@ -30,6 +30,7 @@
     <string name="create">Opret</string>
     <string name="cancel">Afbryd</string>
     <string name="noNewRequests">Der er ingen ventende andmodninger</string>
+    <string name="noNewEvents">Der er ingen begivenheder</string>
     <string name="failedRequest">Din anmodning fejlede. Prøv igen!</string>
     <string name="reset">Nulstil</string>
     <string name="resetPassword">Nulstil mit kodeord</string>
