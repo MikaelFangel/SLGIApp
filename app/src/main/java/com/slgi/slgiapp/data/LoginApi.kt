@@ -8,4 +8,5 @@ interface LoginApi {
     suspend fun resetPassword(email: String)
     fun addUser(email: String, password: String)
     suspend fun deleteUser()
+    fun loggedIn(): Boolean
 }

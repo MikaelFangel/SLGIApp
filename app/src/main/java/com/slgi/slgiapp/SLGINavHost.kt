@@ -93,7 +93,11 @@ fun SLGINavHost(
 
     NavHost(
         navController = navController,
-        startDestination = Screens.LOGIN_SCREEN.name
+        startDestination = if (loginScreenViewModel.loggedIn()) {
+            Screens.MYEVENTS_SCREEN.name
+        } else {
+            Screens.LOGIN_SCREEN.name
+        }
     ) {
         composable(Screens.UPCOMING_SCREEN.name) {
             UpcomingEventsScreen(

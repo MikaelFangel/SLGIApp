@@ -33,6 +33,10 @@ class LoginScreenViewModel(
         }
     }
 
+    fun loggedIn(): Boolean {
+        return loginRepository.loggedIn()
+    }
+
     private fun isAdmin() {
         CoroutineScope(Dispatchers.Main).launch {
             _uiState.update { c ->

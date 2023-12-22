@@ -21,6 +21,10 @@ class LoginRepository(private val loginFirebaseDataSource: LoginApi) : LoginApi 
         loginFirebaseDataSource.deleteUser()
     }
 
+    override fun loggedIn(): Boolean {
+        return loginFirebaseDataSource.loggedIn()
+    }
+
     override fun addUser(email: String, password: String) {
         loginFirebaseDataSource.addUser(email,password)
     }
