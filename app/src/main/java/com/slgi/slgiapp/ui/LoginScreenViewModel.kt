@@ -34,7 +34,12 @@ class LoginScreenViewModel(
     }
 
     fun loggedIn(): Boolean {
-        return loginRepository.loggedIn()
+        if (loginRepository.loggedIn()) {
+            isAdmin()
+            return true
+        }
+
+        return false
     }
 
     private fun isAdmin() {
