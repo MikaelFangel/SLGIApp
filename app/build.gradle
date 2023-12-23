@@ -12,7 +12,7 @@ android {
         applicationId = "com.slgi.slgiapp"
         minSdk = 28
         targetSdk = 34
-        versionCode = 6
+        versionCode = 7
         versionName = "1.10.5"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
