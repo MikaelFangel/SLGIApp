@@ -244,7 +244,11 @@ fun CreateEventModal(viewModel: UpcomingEventsScreenViewModel) {
             SelectDateDialog(viewModel = viewModel)
         }
         if (uiState.value.displayTimeDialog) {
-            SelectTimeDialog(viewModel = viewModel)
+            SelectTimeDialog(
+                initialTime = uiState.value.newEventTime,
+                dismiss = { viewModel.dismissTimeDialog() },
+                setTime = { viewModel.setNewEventTime(it) }
+                )
         }
     }
 }
