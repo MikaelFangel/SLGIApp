@@ -9,8 +9,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import java.time.Instant
+import java.time.LocalTime
 import java.time.temporal.ChronoUnit
 import java.util.Date
+import java.util.TimeZone
 
 class UpcomingEventsScreenViewModel(
     private val eventRepository: EventRepository
@@ -27,8 +29,9 @@ class UpcomingEventsScreenViewModel(
     fun createEvent() {
         val eventState = uiState.value
         val addedTime: Instant = Instant.ofEpochSecond(eventState.newEventDate.seconds)
-            .plus(eventState.newEventHours!!.toLong(), ChronoUnit.HOURS)
-            .plus(eventState.newEventMinutes!!.toLong(), ChronoUnit.MINUTES)
+            .plus(eventState.newEventTime.hour.toLong(), ChronoUnit.HOURS)
+            .plus(eventState.newEventTime.minute.toLong(), ChronoUnit.MINUTES)
+            .minusSeconds(TimeZone.getDefault().rawOffset.toLong().div(1_000))
         val newtimestamp = Timestamp(addedTime.epochSecond, 0)
         eventRepository.createEvent(
             Event(
@@ -131,11 +134,10 @@ class UpcomingEventsScreenViewModel(
         }
     }
 
-    fun setNewEventTime(hour: Int, minute: Int) {
+    fun setNewEventTime(time: LocalTime) {
         _uiState.update { currentState ->
             currentState.copy(
-                newEventHours = hour,
-                newEventMinutes = minute
+                newEventTime = time
             )
         }
     }
