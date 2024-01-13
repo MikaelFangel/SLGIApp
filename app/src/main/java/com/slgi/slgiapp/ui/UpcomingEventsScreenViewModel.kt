@@ -94,19 +94,8 @@ class UpcomingEventsScreenViewModel(
     }
 
     fun dismissCreateDialog() {
-        _uiState.update { currentState ->
-            currentState.copy(
-                displayCreateDialog = false,
-                displayDateDialog = false,
-                displayTimeDialog = false,
-                newEventName = "",
-                newEventDescription = "",
-                newEventImageURL = "",
-                newEventFireLeader = "",
-                newEventHours = null,
-                newEventMinutes = null,
-                newEventDate = Timestamp.now()
-            )
+        _uiState.update {
+            EventScreenState()
         }
     }
 
