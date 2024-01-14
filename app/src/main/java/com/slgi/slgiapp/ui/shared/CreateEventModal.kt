@@ -41,17 +41,14 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.slgi.slgiapp.R
 import com.slgi.slgiapp.ui.UpcomingEventsScreenViewModel
+import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 @Composable
 fun CreateEventModal(viewModel: UpcomingEventsScreenViewModel) {
     val uiState = viewModel.uiState.collectAsState()
     val focusManager = LocalFocusManager.current
-    var timeDisplay = "hh:mm"
-    if (uiState.value.newEventHours != null && uiState.value.newEventMinutes != null) {
-        timeDisplay =
-            uiState.value.newEventHours.toString() + ":" + uiState.value.newEventMinutes.toString()
-    }
+    val timeDisplay = uiState.value.newEventTime.format(DateTimeFormatter.ofPattern("HH:mm"))
     Dialog(
         onDismissRequest = { viewModel.dismissCreateDialog() },
         properties = DialogProperties(
@@ -231,7 +228,7 @@ fun CreateEventModal(viewModel: UpcomingEventsScreenViewModel) {
                         viewModel.dismissCreateDialog()
                     },
                     modifier = Modifier.width(100.dp),
-                    enabled = !(uiState.value.newEventName.length <= 1 && uiState.value.newEventHours == null && uiState.value.newEventMinutes == null)
+                    enabled = uiState.value.newEventName.length > 1
                 ) {
                     Text(
                         text = stringResource(id = R.string.create),
@@ -244,7 +241,11 @@ fun CreateEventModal(viewModel: UpcomingEventsScreenViewModel) {
             SelectDateDialog(viewModel = viewModel)
         }
         if (uiState.value.displayTimeDialog) {
-            SelectTimeDialog(viewModel = viewModel)
+            SelectTimeDialog(
+                initialTime = uiState.value.newEventTime,
+                dismiss = { viewModel.dismissTimeDialog() },
+                setTime = { viewModel.setNewEventTime(it) }
+                )
         }
     }
 }

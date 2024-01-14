@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -21,31 +20,27 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.slgi.slgiapp.R
-import com.slgi.slgiapp.ui.UpcomingEventsScreenViewModel
+import java.time.LocalTime
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SelectTimeDialog(viewModel: UpcomingEventsScreenViewModel) {
-
+fun SelectTimeDialog(
+    initialTime: LocalTime = LocalTime.now(),
+    dismiss: () -> Unit,
+    setTime: (LocalTime) -> Unit,
+) {
 
     val timePickerState = rememberTimePickerState(
-        initialHour = 10,
-        initialMinute = 0,
+        initialHour = initialTime.hour,
+        initialMinute = initialTime.minute,
         is24Hour = true
     )
 
-    AlertDialog(
-        modifier = Modifier
-            .fillMaxWidth()
-            .shadow(10.dp)
-            .background(
-                color = MaterialTheme.colorScheme.surfaceVariant,
-                shape = RoundedCornerShape(size = 20.dp)
-            )
-            ,
-        onDismissRequest = { viewModel.dismissTimeDialog() },
+    Dialog(
+        onDismissRequest = dismiss,
         properties = DialogProperties(
             dismissOnBackPress = false,
             dismissOnClickOutside = false
@@ -53,12 +48,18 @@ fun SelectTimeDialog(viewModel: UpcomingEventsScreenViewModel) {
     ) {
         Column(
             modifier = Modifier
-                .padding(15.dp, 15.dp),
+                .fillMaxWidth()
+                .shadow(10.dp)
+                .background(
+                    color = MaterialTheme.colorScheme.surfaceVariant,
+                    shape = RoundedCornerShape(size = 20.dp)
+                ),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             // time picker
             TimePicker(
+                modifier = Modifier.padding(15.dp),
                 state = timePickerState,
                 colors = TimePickerColors(
                     clockDialColor = MaterialTheme.colorScheme.secondaryContainer,
@@ -86,17 +87,15 @@ fun SelectTimeDialog(viewModel: UpcomingEventsScreenViewModel) {
                 horizontalArrangement = Arrangement.End
             ) {
                 // dismiss button
-                TextButton(onClick = {
-                    viewModel.dismissTimeDialog()
-                }) {
+                TextButton(onClick = dismiss) {
                     Text(text = stringResource(id = R.string.cancel))
                 }
 
                 // confirm button
                 TextButton(
                     onClick = {
-                        viewModel.setNewEventTime(timePickerState.hour, timePickerState.minute)
-                        viewModel.dismissTimeDialog()
+                        setTime(LocalTime.of(timePickerState.hour, timePickerState.minute,0))
+                        dismiss()
                     }
                 ) {
                     Text(text = stringResource(id = R.string.confirm))
