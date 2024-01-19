@@ -1,7 +1,7 @@
 package com.slgi.slgiapp.data
 
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.dataObjects
+import com.google.firebase.firestore.dataObjects
 import kotlinx.coroutines.flow.Flow
 
 class RequestDataSource : RequestDataSourceApi {

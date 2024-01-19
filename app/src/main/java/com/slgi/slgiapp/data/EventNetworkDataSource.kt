@@ -4,7 +4,7 @@ import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.dataObjects
+import com.google.firebase.firestore.dataObjects
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.tasks.await
 
