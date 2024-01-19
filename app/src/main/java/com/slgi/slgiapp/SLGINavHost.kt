@@ -10,7 +10,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Logout
 import androidx.compose.material.icons.outlined.DeleteForever
-import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ElevatedCard
@@ -82,7 +82,7 @@ fun SLGINavHost(
         mutableStateOf(false)
     }
     if (showSafetyDialog.value) {
-        safetyDialog(showSafetyDialog) {
+        SafetyDialog(showSafetyDialog) {
             loginScreenViewModel.deleteUser()
             showSafetyDialog.value = false
             navController.navigate(Screens.LOGIN_SCREEN.name) {
@@ -204,8 +204,8 @@ fun SLGINavHost(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun safetyDialog(show: MutableState<Boolean>, onConfirm: () -> Unit) {
-    AlertDialog(onDismissRequest = { show.value = false }) {
+fun SafetyDialog(show: MutableState<Boolean>, onConfirm: () -> Unit) {
+    BasicAlertDialog(onDismissRequest = { show.value = false }) {
         ElevatedCard {
             Column(modifier = Modifier.padding(10.dp)) {
                 Text(text = stringResource(id = R.string.areYouSure))
