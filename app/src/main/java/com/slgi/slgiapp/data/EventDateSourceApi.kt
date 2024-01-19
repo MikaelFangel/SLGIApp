@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 interface EventDateSourceApi {
     val events: Flow<List<Event>>
 
-    suspend fun toggleParticipation(id: String)
+    suspend fun toggleParticipation(eventId: String)
     fun getParticipantFlow(eventId: String): Flow<List<User>>?
     fun getParticipants(eventId: String): Flow<List<User>>
     fun createEvent(event: Event)
